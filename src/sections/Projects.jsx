@@ -231,11 +231,11 @@ const Projects = () => {
                                         </p>
                                     </div>
 
-                                    <div className="flex flex-col sm:gap-5 gap-2 text-white-600 sm:my-5 my-2">
-                                        <p className="animatedText sm:text-base text-sm h-[100px] overflow-y-auto">
+                                    <div className="flex flex-col sm:gap-2 gap-1 text-white-600 sm:my-3 my-2">
+                                        <p className="animatedText sm:text-base text-sm h-[100px] sm:h-[80px] overflow-y-auto custom-scrollbar">
                                             {currentProject.desc}
                                         </p>
-                                        <p className="animatedText sm:text-base text-sm sm:block hidden h-[80px] overflow-y-auto">
+                                        <p className="animatedText sm:text-base text-sm sm:block hidden h-[150px] overflow-y-auto custom-scrollbar">
                                             {currentProject.subdesc}
                                         </p>
                                     </div>
