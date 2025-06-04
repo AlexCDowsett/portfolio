@@ -1,0 +1,15 @@
+@media (max-width: 768px) {
+    .progress-bar-container {
+        display: none !important;
+    }
+
+    .stack-item {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 15px !important;
+    }
+
+    .left-section {
+        width: 100%;
+    }
+} 

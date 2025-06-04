@@ -1,0 +1,31 @@
+/* Glitch.css */
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+        opacity: 1;
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(2px, -2px);
+        opacity: 0.6;
+    }
+    60% {
+        transform: translate(-2px, 2px);
+        opacity: 0.4;
+    }
+    80% {
+        transform: translate(2px, -2px);
+        opacity: 0.2;
+    }
+    100% {
+        transform: translate(0);
+        opacity: 1;
+    }
+}
+
+.glitch {
+    animation: glitch 1s ease-in-out forwards;
+    color: white; /* Change text color to white or any contrasting color */
+}

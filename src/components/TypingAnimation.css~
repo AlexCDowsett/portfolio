@@ -1,0 +1,16 @@
+.cursor {
+    display: inline-block; /* Ensure the cursor is inline with the text */
+    color: black; /* Cursor color */
+    animation: blink 0.7s infinite; /* Blinking animation */
+    vertical-align: middle; /* Align with text */
+    margin-left: 2px; /* Optional: Add a small margin for spacing */
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1; /* Fully visible */
+    }
+    50% {
+        opacity: 0; /* Invisible */
+    }
+}

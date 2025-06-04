@@ -1,0 +1,19 @@
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import GlitchEffect from 'Glitch.jsx'; // Ensure correct path to GlitchEffect component
+
+const GlitchContext = createContext();
+
+export const useGlitch = () => {
+    return useContext(GlitchContext);
+};
+
+export const GlitchProvider = ({ children }) => {
+    const [glitchText, setGlitchText] = useState(null);
+
+    return (
+        <GlitchContext.Provider value={{ setGlitchText }}>
+            {children}
+            {glitchText && <GlitchEffect text={glitchText} />}
+        </GlitchContext.Provider>
+    );
+};

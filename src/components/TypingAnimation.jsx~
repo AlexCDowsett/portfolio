@@ -1,0 +1,46 @@
+import React, { useEffect } from "react";
+import Typed from "typed.js";
+
+const TypingAnimation = () => {
+    useEffect(() => {
+        const options = {
+            strings: ["Alex Dowsett's Portfolio", "dowsett.dev"], // Strings in lowercase
+            typeSpeed: 100, // Speed of typing
+            backSpeed: 50, // Speed of backspacing
+            backDelay: 500, // Delay before backspacing
+            startDelay: 500, // Initial delay before typing starts
+            loop: false, // Play animation only once
+            onComplete: (self) => {
+                // After typing "alex dowsett", delete "alex "
+                if (self.strings[0] === "alex dowsett") {
+                    setTimeout(() => {
+                        self.cursor.remove(); // Hide the cursor during backspace
+                        self.backspace(5, 50, () => {
+                            // After backspacing "alex "
+                            self.cursor.show();
+                            self.start(); // Restart typing "dowsett.dev"
+                        });
+                    }, 1500); // Delay before starting to backspace
+                }
+            },
+            preStringTyped: (arrayPos, self) => {
+                // Handle special actions before typing
+                if (arrayPos === 1) {
+                    self.cursor.remove(); // Hide the cursor during the backspacing of "alex "
+                }
+            },
+        };
+
+        const typed = new Typed("#typed", options); // Initialize Typed.js
+
+        return () => {
+            typed.destroy(); // Cleanup on component unmount
+        };
+    }, []);
+
+    return (
+        <h1 id="typed" />
+    );
+};
+
+export default TypingAnimation; // Export TypingAnimation component
