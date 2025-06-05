@@ -6,19 +6,42 @@ import TypingAnimation from "../components/TypingAnimation.jsx";
 import { motion } from "framer-motion";
 import { useScroll } from '../context/ScrollContext.jsx';
 import { useMediaQuery } from 'react-responsive';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const NavItems = ({ toggleMenu }) => {
-    const handleScrollToAbout = () => {
-        const aboutSection = document.getElementById("about");
-        if (aboutSection) {
-            const navbarHeight = document.querySelector("header").offsetHeight; // Get the height of the navbar
-            const aboutPosition = aboutSection.offsetTop - navbarHeight; // Calculate the position to scroll to
-            window.scrollTo({
-                top: aboutPosition,
-                behavior: "smooth" // Smooth scroll
-            });
-            toggleMenu(); // Close the menu if it's open
+    const location = useLocation();
+    const navigate = useNavigate();
+    const isLegalPage = location.pathname === '/legal';
+
+    const handleNavigation = (href) => {
+        if (isLegalPage) {
+            // If on legal page, first navigate to home
+            navigate('/');
+            // Then scroll to the section after a short delay
+            setTimeout(() => {
+                const section = document.getElementById(href.substring(1));
+                if (section) {
+                    const navbarHeight = document.querySelector("header").offsetHeight;
+                    const sectionPosition = section.offsetTop - navbarHeight;
+                    window.scrollTo({
+                        top: sectionPosition,
+                        behavior: "smooth"
+                    });
+                }
+            }, 100);
+        } else if (href.startsWith('#')) {
+            // If on home page, just scroll to section
+            const section = document.getElementById(href.substring(1));
+            if (section) {
+                const navbarHeight = document.querySelector("header").offsetHeight;
+                const sectionPosition = section.offsetTop - navbarHeight;
+                window.scrollTo({
+                    top: sectionPosition,
+                    behavior: "smooth"
+                });
+            }
         }
+        toggleMenu(); // Close the menu if it's open
     };
 
     return (
@@ -26,9 +49,12 @@ const NavItems = ({ toggleMenu }) => {
             {navLinks.map(({ id, href, name }) => (
                 <li key={id} className="nav-li">
                     <a
-                        href={href === "#about" ? undefined : href} // Prevent default behavior for the About link
+                        href={name === "CV" ? href : undefined}
                         className="nav-li_a"
-                        onClick={href === "#about" ? handleScrollToAbout : toggleMenu} // Use custom handler for About
+                        onClick={name === "CV" ? undefined : (e) => {
+                            e.preventDefault();
+                            handleNavigation(href);
+                        }}
                         target={name === "CV" ? "_blank" : "_self"}
                     >
                         <p className={`${name === "CV" ? "stylish-font" : ""}`}>{name}</p>
