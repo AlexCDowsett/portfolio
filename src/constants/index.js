@@ -22,7 +22,7 @@ export const navLinks = [
     {
         id: 4,
         name: 'CV',
-        href: '/public/CV - Alex Dowsett.pdf',
+        href: '/CV - Alex Dowsett.pdf',
     },
 ];
 
