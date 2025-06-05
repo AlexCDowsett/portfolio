@@ -65,7 +65,7 @@ export const clientReviews = [
 export const myProjects = [
     {
         title: 'Portfolio Website',
-        desc: 'A modern, interactive portfolio website featuring my projects and a chance to learn frontend languages. Built with React and Three.js for immersive 3D graphics, enhanced with Framer Motion for smooth animations and transitions.',
+        desc: 'A modern, interactive portfolio website featuring my projects and a chance to learn frontiend languages. Built with React and Three.js for immersive 3D graphics, enhanced with Framer Motion for smooth animations and transitions.',
         subdesc: 'Utilizes React Three Fiber for 3D rendering, Tailwind CSS for responsive design, and GSAP for advanced animations. Features a custom 3D computer model with interactive screens showcasing project demos in real-time. The portfolio implements responsive design principles, ensuring optimal viewing across all devices. The 3D scene is optimized for performance using React Three Fiber\'s efficient rendering pipeline, while Framer Motion provides smooth page transitions and micro-interactions. The project demonstrates modern web development practices including component-based architecture, state management, and responsive design patterns.',
         href: 'https://github.com/AlexCDowsett/portfolio',
         texture: '/textures/project/project1.mp4',
