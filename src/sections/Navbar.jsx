@@ -17,17 +17,24 @@ const NavItems = ({ toggleMenu }) => {
         if (isLegalPage) {
             // If on legal page, first navigate to home
             navigate('/');
-            // Then scroll to the section after a short delay
+            // Then scroll to the section after the page has loaded
             setTimeout(() => {
-                const section = document.getElementById(href.substring(1));
-                if (section) {
-                    const navbarHeight = document.querySelector("header").offsetHeight;
-                    const sectionPosition = section.offsetTop - navbarHeight;
-                    window.scrollTo({
-                        top: sectionPosition,
-                        behavior: "smooth"
-                    });
-                }
+                const scrollToSection = () => {
+                    const section = document.getElementById(href.substring(1));
+                    if (section) {
+                        const navbarHeight = document.querySelector("header").offsetHeight;
+                        const sectionPosition = section.offsetTop - navbarHeight;
+                        window.scrollTo({
+                            top: sectionPosition,
+                            behavior: "smooth"
+                        });
+                    } else {
+                        // If section not found, try again after a short delay
+                        setTimeout(scrollToSection, 100);
+                    }
+                };
+                // Start the scroll attempt after a longer delay to ensure page is loaded
+                setTimeout(scrollToSection, 500);
             }, 100);
         } else if (href.startsWith('#')) {
             // If on home page, just scroll to section
