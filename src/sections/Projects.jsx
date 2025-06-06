@@ -110,6 +110,9 @@ const Projects = () => {
 
     const [hasNavigatedNext, setHasNavigatedNext] = useState(false);
     const [isNavigatingOut, setIsNavigatingOut] = useState(false);
+    const [isNavigating, setIsNavigating] = useState(false);
+    const scrollBlocked = useRef(false);
+    const scrollThreshold = 50; // Minimum scroll amount to trigger navigation
 
     const handleNavigation = (direction) => {
         if (direction === 'next' && !hasNavigatedNext) {
@@ -183,6 +186,55 @@ const Projects = () => {
         setIsMobile(isMobileUserAgent);
     }, []);
 
+    // Add wheel event handler for horizontal scroll navigation
+    useEffect(() => {
+        if (isMobile) return; // Don't add wheel handler for mobile devices
+
+        const handleWheel = (event) => {
+            if (!canSwipe || !projectsRef.current || scrollBlocked.current) return;
+
+            // Check if the cursor is within the projects section
+            const rect = projectsRef.current.getBoundingClientRect();
+            const isInProjectsSection = 
+                event.clientX >= rect.left && 
+                event.clientX <= rect.right && 
+                event.clientY >= rect.top && 
+                event.clientY <= rect.bottom;
+
+            if (!isInProjectsSection) return;
+
+            // Check if the scroll is primarily horizontal and exceeds threshold
+            if (Math.abs(event.deltaX) > Math.abs(event.deltaY) && Math.abs(event.deltaX) > scrollThreshold) {
+                event.preventDefault(); // Prevent default scroll behavior
+                event.stopPropagation(); // Stop event propagation
+                
+                scrollBlocked.current = true;
+                setCanSwipe(false);
+                setIsNavigating(true);
+                
+                if (event.deltaX > 0) {
+                    handleNavigation('next');
+                } else {
+                    handleNavigation('previous');
+                }
+
+                // Re-enable everything after animation
+                setTimeout(() => {
+                    setCanSwipe(true);
+                    setIsNavigating(false);
+                    scrollBlocked.current = false;
+                }, 1000);
+            }
+        };
+
+        // Add wheel event listener with passive: false to allow preventDefault
+        window.addEventListener('wheel', handleWheel, { passive: false });
+
+        return () => {
+            window.removeEventListener('wheel', handleWheel);
+        };
+    }, [isMobile, canSwipe]);
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -229,7 +281,7 @@ const Projects = () => {
                                     className="flex flex-col gap-5"
                                 >
                                     {/* Title and logo section */}
-                                    <div className="sm:block flex items-start sm:gap-3 gap-2">
+                                    <div className="sm:block flex items-start sm:gap-3 gap-2 mt-2">
                                         <div className="sm:p-3 p-2 backdrop-filter backdrop-blur-3xl w-fit rounded-lg"
                                              style={currentProject.logoStyle}>
                                             <img src={currentProject.logo} alt="logo" 
@@ -247,17 +299,17 @@ const Projects = () => {
                                         </p>
                                     </div>
 
-                                    <div className="flex flex-col sm:gap-2 gap-1 text-white-600 sm:my-3 my-2">
+                                    <div className="flex flex-col sm:gap-2 gap-1 text-white-600">
                                         <p className="animatedText sm:text-base text-sm h-[100px] sm:h-[80px] overflow-y-auto custom-scrollbar">
                                             {currentProject.desc}
                                         </p>
-                                        <p className="animatedText sm:text-base text-sm sm:block hidden h-[150px] overflow-y-auto custom-scrollbar">
+                                        <p className="animatedText sm:text-base text-sm sm:block hidden h-[220px] overflow-y-auto custom-scrollbar">
                                             {currentProject.subdesc}
                                         </p>
                                     </div>
 
-                                    <div className="flex flex-col gap-2 md:gap-5 sm:my-5 relative z-10">
-                                        <div className="flex items-center flex-wrap gap-1 sm:gap-2">
+                                    <div className="flex flex-col gap-2 md:gap-5 relative z-10">
+                                        <div className="flex items-center flex-wrap gap-1 sm:gap-2 md:gap-3">
                                             {currentProject.tags.map((tag, index) => (
                                                 <div 
                                                     key={index} 
