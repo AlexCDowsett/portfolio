@@ -39,7 +39,7 @@ const Legal = () => {
                         <br /><br />
                         • I reserve the right to update these terms at any time. Continued use of the site constitutes acceptance of the new terms.
                         <br /><br />
-                        If you have any questions, contact me at alexcdowsett@gmail.com
+                        If you have any questions, contact legal@dowsett.dev
                     </p>
                 </section>
 
@@ -58,7 +58,7 @@ const Legal = () => {
                         <br /><br />
                         • Your Rights: You can request to see or delete any personal data I may have about you.
                         <br /><br />
-                        For privacy concerns, contact alexcdowsett@gmail.com
+                        For privacy concerns, contact legal@dowsett.dev
                     </p>
                 </section>
 
