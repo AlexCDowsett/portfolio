@@ -48,9 +48,25 @@ const Projects = () => {
         tooltip.classList.add('tech-tooltip');
         document.body.appendChild(tooltip);
 
+        // Add scroll event listener
+        const handleScroll = () => {
+            const tooltip = document.querySelector('.tech-tooltip');
+            if (tooltip) {
+                tooltip.style.transition = 'opacity 0.2s ease-out';
+                tooltip.style.opacity = '0';
+                // Remove the tooltip from DOM after fade completes
+                setTimeout(() => {
+                    tooltip.style.visibility = 'hidden';
+                }, 200);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
         // Cleanup on unmount
         return () => {
             tooltip.remove();
+            window.removeEventListener('scroll', handleScroll);
         };
     }, []);
 
