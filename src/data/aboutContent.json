@@ -1,7 +1,7 @@
 {
     "introduction": {
         "title": "Hi, I'm Alex Dowsett",
-        "description": "As a recent graduate, from Univerisity of Surrey, with 12 years of experience, I have honed my skills in backend dev with an introduction to frontend with this portfolio, creating elegant and responsive software solutions."
+        "description": "As a recent graduate, from Univerisity of Surrey and 12 years of experience, I have honed my skills in backend dev with an introduction to frontend with this portfolio, creating elegant and responsive software solutions."
     },
     "passion": {
         "title": "My Passion for Coding",
@@ -9,7 +9,7 @@
     },
     "location": {
         "title": "Flexible with time zone communications & locations",
-        "description": "I'm based in Essex, England and open to remote work worldwide."
+        "description": "I'm based near London, England and open to remote work worldwide."
     },
     "techStack": {
         "title": "Tech Stack",

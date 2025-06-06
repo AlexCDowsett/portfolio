@@ -77,15 +77,14 @@ const World = () => {
         const targetAltitude = 2.2; // End altitude is 2.2
 
         // Animation timing
-        const zoomDuration = 2000;  // 2 seconds for the zoom effect
+        const zoomDuration = 3000;  // 3 seconds for the zoom effect
         const zoomSteps = 60;       // 60 steps (30Hz) for smoother animation
         const intervalTime = zoomDuration / zoomSteps; // Time per step
 
         // Set initial opacity of clouds to 0
         let cloudOpacity = 0;
 
-
-        // Start the zoom-out and latitude transition effect after a 0.5s delay
+        // Start the zoom-out and latitude transition effect after a 1.5s delay
         setTimeout(() => {
             setIsZoomingOut(true); // Set the zooming out flag to true
             const newZoomInterval = setInterval(() => {
@@ -114,7 +113,6 @@ const World = () => {
                         clearInterval(newZoomInterval); // Stop the interval once both transitions are complete
                         setZoomInterval(null); // Clear the zoom interval reference
 
-
                         // Enable auto-rotation after the zoom-out is complete
                         globe.controls().autoRotate = true;
                         globe.controls().autoRotateSpeed = 0.35; // Set auto-rotation speed back to 0.35
@@ -135,7 +133,7 @@ const World = () => {
                 });
             }, intervalTime);
             setZoomInterval(newZoomInterval); // Store the interval so it can be cancelled later
-        }, 750); // Start the zoom effect after a 1-second delay
+        }, 1500); // Start the zoom effect after a 1.5-second delay
 
         setEffectsApplied(true); // Mark that the zoom-out effect has been applied
     };

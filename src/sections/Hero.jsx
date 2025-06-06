@@ -87,7 +87,7 @@ const Hero = forwardRef((props, ref) => {
                         animate={{ opacity: 1, y: 0 }} // Fade in and move to original position
                         transition={{ duration: 0.5 }} // Duration of the animation
                     >
-                        <div className="flex justify-end w-3/5"> {/* Align text to the right */}
+                        <div className="flex justify-center"> {/* Align text to the right */}
                             <p className="sm:text-3xl text-xl font-medium text-white text-center font-generalsans">
                                 <GlitchEffect text="Hi, I'm Alex" textColor="#FFFFFF" bgColor="#000000" glitchInterval={100} />
                                 <span className={isGlitching ? "" : "waving-hand"}>{emoji}</span>
