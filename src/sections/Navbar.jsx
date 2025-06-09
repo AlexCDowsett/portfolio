@@ -9,9 +9,13 @@ import { useMediaQuery } from 'react-responsive';
 
 const NavItems = ({ toggleMenu }) => {
     const handleNavigation = (href) => {
-        // If we're not on the main page, first navigate to the main page
+        // If we're not on the main page, first navigate to the main page with the hash
         if (window.location.pathname !== '/') {
-            window.location.href = href;
+            // Extract the hash from the href (e.g., '#about' from '/#about')
+            const hash = href.startsWith('#') ? href : '';
+            // Store the hash in sessionStorage before navigation
+            sessionStorage.setItem('scrollToHash', hash);
+            window.location.href = `/${hash}`;
             return;
         }
 
@@ -21,6 +25,11 @@ const NavItems = ({ toggleMenu }) => {
             if (element) {
                 const navbarHeight = document.querySelector("header").offsetHeight;
                 const elementPosition = element.offsetTop - navbarHeight;
+                
+                // Update the URL hash without triggering a scroll
+                history.pushState(null, null, href);
+                
+                // Smooth scroll to the element
                 window.scrollTo({
                     top: elementPosition,
                     behavior: "smooth"
@@ -32,6 +41,28 @@ const NavItems = ({ toggleMenu }) => {
         }
         toggleMenu();
     };
+
+    // Add effect to handle scroll after navigation
+    useEffect(() => {
+        const scrollToHash = sessionStorage.getItem('scrollToHash');
+        if (scrollToHash) {
+            // Clear the stored hash
+            sessionStorage.removeItem('scrollToHash');
+            
+            // Wait for the page to be fully loaded
+            setTimeout(() => {
+                const element = document.querySelector(scrollToHash);
+                if (element) {
+                    const navbarHeight = document.querySelector("header").offsetHeight;
+                    const elementPosition = element.offsetTop - navbarHeight;
+                    window.scrollTo({
+                        top: elementPosition,
+                        behavior: "smooth"
+                    });
+                }
+            }, 100); // Small delay to ensure the page is loaded
+        }
+    }, []);
 
     return (
         <ul className="nav-ul">
