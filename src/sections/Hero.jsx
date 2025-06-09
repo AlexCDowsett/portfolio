@@ -68,10 +68,32 @@ const Hero = forwardRef((props, ref) => {
         }
     }, [showText, isGlitching]);
 
-    // New useEffect to log isGlitching value
-    useEffect(() => {
-        console.log("isGlitching value changed:", isGlitching);
-    }, [isGlitching]); // This will run whenever isGlitching changes
+    const handleNavigation = (e) => {
+        e.preventDefault();
+        const href = "#about";
+        
+        // If we're not on the main page, first navigate to the main page with the hash
+        if (window.location.pathname !== '/') {
+            window.location.href = `/${href}`;
+            return;
+        }
+
+        // If we're already on the main page, handle hash navigation
+        const element = document.querySelector(href);
+        if (element) {
+            const navbarHeight = document.querySelector("header").offsetHeight;
+            const elementPosition = element.offsetTop - navbarHeight;
+            
+            // Update the URL hash without triggering a scroll
+            history.pushState(null, null, href);
+            
+            // Smooth scroll to the element
+            window.scrollTo({
+                top: elementPosition,
+                behavior: "smooth"
+            });
+        }
+    };
 
     const sizes = calculateSizes(false, isMobile, false); // Adjust as needed for other sizes
 
@@ -123,7 +145,7 @@ const Hero = forwardRef((props, ref) => {
                         animate={{ opacity: showButton ? 1 : 0, y: showButton ? 0 : 50 }}
                         transition={{ duration: 0.5, ease: "easeOut" }}
                     >
-                        <a href="#about" className="flex">
+                        <a href="#about" className="flex" onClick={handleNavigation}>
                             <Button 
                                 name="Let's work together" 
                                 isBeam 
