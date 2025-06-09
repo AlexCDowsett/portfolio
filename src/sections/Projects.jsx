@@ -300,7 +300,7 @@ const Projects = () => {
                                     </div>
 
                                     <div className="flex flex-col sm:gap-2 gap-1 text-white-600">
-                                        <p className="animatedText sm:text-base text-sm h-[100px] sm:h-[80px] overflow-y-auto custom-scrollbar">
+                                        <p className="animatedText sm:text-base text-sm h-[100px] sm:h-[100px] overflow-y-auto custom-scrollbar">
                                             {currentProject.desc}
                                         </p>
                                         <p className="animatedText sm:text-base text-sm sm:block hidden h-[220px] overflow-y-auto custom-scrollbar">
