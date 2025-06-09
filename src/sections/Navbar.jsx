@@ -8,17 +8,29 @@ import { useScroll } from '../context/ScrollContext.jsx';
 import { useMediaQuery } from 'react-responsive';
 
 const NavItems = ({ toggleMenu }) => {
-    const handleScrollToAbout = () => {
-        const aboutSection = document.getElementById("about");
-        if (aboutSection) {
-            const navbarHeight = document.querySelector("header").offsetHeight; // Get the height of the navbar
-            const aboutPosition = aboutSection.offsetTop - navbarHeight; // Calculate the position to scroll to
-            window.scrollTo({
-                top: aboutPosition,
-                behavior: "smooth" // Smooth scroll
-            });
-            toggleMenu(); // Close the menu if it's open
+    const handleNavigation = (href) => {
+        // If we're not on the main page, first navigate to the main page
+        if (window.location.pathname !== '/') {
+            window.location.href = href;
+            return;
         }
+
+        // If we're already on the main page, handle hash navigation
+        if (href.startsWith('#')) {
+            const element = document.querySelector(href);
+            if (element) {
+                const navbarHeight = document.querySelector("header").offsetHeight;
+                const elementPosition = element.offsetTop - navbarHeight;
+                window.scrollTo({
+                    top: elementPosition,
+                    behavior: "smooth"
+                });
+            }
+        } else {
+            // For external links (like CV.pdf)
+            window.location.href = href;
+        }
+        toggleMenu();
     };
 
     return (
@@ -26,9 +38,12 @@ const NavItems = ({ toggleMenu }) => {
             {navLinks.map(({ id, href, name }) => (
                 <li key={id} className="nav-li">
                     <a
-                        href={href === "#about" ? undefined : href} // Prevent default behavior for the About link
+                        href={href}
                         className="nav-li_a"
-                        onClick={href === "#about" ? handleScrollToAbout : toggleMenu} // Use custom handler for About
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleNavigation(href);
+                        }}
                         target={name === "CV" ? "_blank" : "_self"}
                     >
                         <p className={`${name === "CV" ? "stylish-font" : ""}`}>{name}</p>
