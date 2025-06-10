@@ -25,7 +25,9 @@ const HeroCamera = ({children, isMobile}) => {
         }
         
         // Always apply rotation regardless of zoom state
-        easing.dampE(groupRef.current.rotation, [-state.pointer.y /3, state.pointer.x / 3, 0], 0.25, delta);
+        if (!isMobile) {
+            easing.dampE(groupRef.current.rotation, [-state.pointer.y /3, state.pointer.x / 3, 0], 0.25, delta);
+        }
         
         if (initialZoom) {
             // Start from far away and zoom in

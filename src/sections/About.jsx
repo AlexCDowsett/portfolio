@@ -222,7 +222,7 @@ const About = forwardRef((props, ref) => {
                             <World/>
                         </div>
                         <div className="flex flex-col justify-end w-full pb-3 lg:pb-5">
-                            <p className="grid-headtext md:overflow-hidden"><GlitchEffect
+                            <p className="grid-headtext md:overflow-hidden md:whitespace-nowrap xl:whitespace-normal"><GlitchEffect
                                 text={aboutContent.location.title} bgColor="#100c14"
                                 textColor="#ffffff" glitchInterval={15}/></p>
                             <p className="grid-subtext pb-2">{aboutContent.location.description}</p>
