@@ -166,19 +166,20 @@ const About = forwardRef((props, ref) => {
             <div className="grid xl:grid-cols-3 xl:grid-rows-6 md:grid-cols-2 grid-cols-1 gap-5 h-full">
                 <div className="col-span-1 xl:row-span-3">
                     <motion.div 
-                        className="grid-container"
+                        className="grid-container items-center flex"
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.3 }}
                         variants={fadeVariants.bottomToTop}
                         custom={isMobile}
                     >
-                        <img src="/assets/grid1.png" alt="grid-1" className="lg:mx-5 lg:my-5 object-cover object-top flex-grow h-[250px]"/>
+                        <img src="/assets/grid1.png" alt="grid-1" 
+                            className="object-cover object-top flex-grow w-full h-full max-h-[200px] sm:max-h-[300px] mb-5 aspect-[1/1]"/>
 
-                        <div>
+                        <div className="flex flex-col justify-end w-full h-full pb-3 lg:pb-5">
                             <p className="grid-headtext"><GlitchEffect text={aboutContent.introduction.title} bgColor="#100c14"
                                                                        textColor="#ffffff"/></p>
-                            <p className="grid-subtext mb-2 lg:mb-8">
+                            <p className="grid-subtext">
                                 {aboutContent.introduction.description}</p>
                         </div>
                     </motion.div>
@@ -186,7 +187,7 @@ const About = forwardRef((props, ref) => {
 
                 <div className="col-span-1 xl:row-span-3">
                     <motion.div 
-                        className="grid-container items-center"
+                        className="grid-container items-center flex"
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.3 }}
@@ -194,12 +195,12 @@ const About = forwardRef((props, ref) => {
                         custom={isMobile}
                     >
                         <img src="/assets/grid3.png" alt="grid-3"
-                             className="lg:mx-5 lg:my-5 object-cover object-top flex-grow h-[250px]"/>
+                             className="object-cover flex-grow w-full max-h-[200px] sm:max-h-[300px] mb-5  aspect-[1/1]"/>
 
-                        <div>
+                        <div className="flex flex-col justify-end w-full h-full pb-3 lg:pb-5">
                             <p className="grid-headtext"><GlitchEffect text={aboutContent.passion.title} bgColor="#100c14"
                                                                        textColor="#ffffff"/></p>
-                            <p className="grid-subtext mb-2 lg:mb-8">
+                            <p className="grid-subtext">
                                 {aboutContent.passion.description}
                             </p>
                         </div>
@@ -208,29 +209,28 @@ const About = forwardRef((props, ref) => {
 
                 <div className="col-span-1 xl:row-span-4">
                     <motion.div 
-                        className="grid-container overflow-hidden"
+                        className="grid-container overflow-hidden flex flex-col justify-center items-center"
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.3 }}
                         variants={fadeVariants.bottomToTop}
                         custom={isMobile}
                     >
-                        <div className="flex-grow w-full flex items-center justify-center lg:px-1" style={{ 
-                            aspectRatio: '1 / 1',
+                        <div className="flex w-full h-full items-center justify-center flex-grow mb-5" style={{ 
                             margin: '0 auto'
                         }}>
                             <World/>
                         </div>
-                        <div>
-                            <p className="grid-headtext md:overflow-hidden md:whitespace-nowrap"><GlitchEffect
+                        <div className="flex flex-col justify-end w-full pb-3 lg:pb-5">
+                            <p className="grid-headtext md:overflow-hidden"><GlitchEffect
                                 text={aboutContent.location.title} bgColor="#100c14"
                                 textColor="#ffffff" glitchInterval={15}/></p>
-                            <p className="grid-subtext lg:pb-2">{aboutContent.location.description}</p>
-                            <a href="#contact">
+                            <p className="grid-subtext pb-2">{aboutContent.location.description}</p>
+                            <a href="#contact" className="block w-full flex justify-center">
                                 <Button
                                     name="Contact Me" 
                                     isBeam 
-                                    containerClass="w-3/4 mt-5 transition-transform duration-300 ease-in-out transform hover:scale-110"
+                                    containerClass="mt-5 transition-transform duration-300 ease-in-out transform hover:scale-110 w-3/4 mx-auto"
                                 />
                             </a>
                         </div>
@@ -249,9 +249,9 @@ const About = forwardRef((props, ref) => {
                         <div className="flex-grow w-full h-fit flex justify-center items-center">
                             <TechStack/>
                         </div>
-                        <div>
+                        <div className="flex flex-col justify-end w-full pb-3 lg:pb-5">
                             <p className="grid-headtext"><GlitchEffect text={aboutContent.techStack.title} bgColor="#100c14" textColor="#ffffff" glitchInterval={50}/></p>
-                            <p className="grid-subtext pb-5 lg:pb-8">
+                            <p className="grid-subtext">
                                 {aboutContent.techStack.description}
                             </p>
                         </div>

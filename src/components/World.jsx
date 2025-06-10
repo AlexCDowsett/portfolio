@@ -2,6 +2,10 @@ import Globe from "react-globe.gl";
 import {DoubleSide, Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader} from "three";
 import React, {useEffect, useRef, useState} from "react";
 
+// New variables for ring customization
+const RING_BASE_RADIUS = 30; // Controls the maximum radius of the pulsing rings
+const RING_REPEAT_PERIOD = 6000; // Controls the duration of the ring pulse, higher means slower decay
+
 const World = () => {
     const containerRef = useRef();  // Ref for the wrapper div
     const globeEl = useRef();       // Ref for the Globe component
@@ -153,7 +157,7 @@ const World = () => {
     const onGlobeReady = () => {
         if (globeEl.current) {
             // Set the initial point of view immediately after the globe is ready
-            globeEl.current.pointOfView({lat: 51.88880, lng: 0.449640, altitude: 0.3});
+            globeEl.current.pointOfView({lat: 52, lng: 0.45, altitude: 0.3});
 
             // Ensure auto-rotation is initially disabled (will be enabled after zoom-out)
             globeEl.current.controls().autoRotate = false;
@@ -216,11 +220,11 @@ const World = () => {
 const getPulsingRingMaxRadius = () => {
     if (!shouldPulse) return 0; // No pulsing if should not pulse
     const pulse = Math.sin(currentStep * 0.1) * 0.5 + 1; // Adjust based on step for pulsing effect
-    return 10 * pulse; // Adjust maximum radius as needed
+    return RING_BASE_RADIUS * pulse; // Use the new variable for base radius
 };
 
 const markerSvg = `<svg viewBox="-4 0 36 36">
-    <path fill="currentColor" d="M14,0 C21.732,0 28,5.641 28,12.6 C28,23.963 14,36 14,36 C14,36 0,24.064 0,12.6 C0,5.641 6.268,0 14,0 Z"></path>
+    <path fill="currentColor" stroke="red" stroke-width="2" d="M14,0 C21.732,0 28,5.641 28,12.6 C28,23.963 14,36 14,36 C14,36 0,24.064 0,12.6 C0,5.641 6.268,0 14,0 Z"></path>
     <circle fill="black" cx="14" cy="14" r="7"></circle>
   </svg>`;
 
@@ -275,18 +279,18 @@ return (
                         onGlobeReady();
                         addClouds();
                     }} // Set the initial point of view and add clouds when the globe is ready
-                    ringsData={[{lat: 51.88880, lng: 0.449640}]} // Always show the rings
+                    ringsData={[{lat: 51.9, lng: 0.45}]} // Always show the rings
                     ringMaxRadius={getPulsingRingMaxRadius()} // Use the dynamic pulsing radius
                     ringPropagationSpeed={1}
-                    ringRepeatPeriod={4000}
+                    ringRepeatPeriod={RING_REPEAT_PERIOD} // Use the new variable for decay period
                     ringColor={() => colorInterpolator}
-                    htmlElementsData={[{lat: 51.88880, lng: 0.449640}]}
+                    htmlElementsData={[{lat: 51.9, lng: 0.45}]}
                     htmlElement={() => {
                         // Create the main element
                         const el = document.createElement('div');
                         el.innerHTML = markerSvg;
                         el.style.color = 'white';
-                        el.style.width = '6px';
+                        el.style.width = '9px';
                         el.style['pointer-events'] = 'auto'; // Enable pointer events
 
                         // Create the tooltip element

@@ -198,7 +198,7 @@ const TechStack = () => {
             {techStack.map((stack, index) => (
                 <div
                     key={index}
-                    className="stack-item flex flex-col w-full gap-5"
+                    className="stack-item flex flex-col w-full gap-3"
                     data-index={index}
                 >
                     <div className="flex flex-row w-full items-center gap-5">
