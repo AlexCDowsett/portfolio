@@ -79,4 +79,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 Alex Dowsett
 - GitHub: [@AlexCDowsett](https://github.com/AlexCDowsett)
-- LinkedIn: https://www.linkedin.com/in/alex-dowsett-27266b151/
+- LinkedIn: [Alex Dowsett](https://www.linkedin.com/in/alex-dowsett-27266b151/)
