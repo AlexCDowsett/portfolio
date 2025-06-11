@@ -52,7 +52,7 @@ npm run dev
 
 ## 🌐 Live Demo
 
-Visit the live site at: dowsett.dev
+Visit the live site at: [dowsett.dev](https://dowsett.dev)
 
 ## 📝 Project Structure
 
