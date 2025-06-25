@@ -84,21 +84,36 @@ export const myProjects = [
             },
             {
                 id: 2,
-                name: 'Three.js',
-                path: '/assets/threejs.png',
-            },
-            {
-                id: 3,
                 name: 'TailwindCSS',
                 path: '/assets/tailwindcss.png',
             },
             {
+                id: 3,
+                name: 'Vite',
+                path: '/assets/vite.svg',
+            },
+            {
                 id: 4,
+                name: 'Three.js',
+                path: '/assets/threejs.png',
+            },
+            {
+                id: 5,
                 name: 'Framer Motion',
                 path: '/assets/framer.svg',
             },
             {
-                id: 5,
+                id: 6,
+                name: 'ESLint',
+                path: '/assets/eslint.svg',
+            },
+            {
+                id: 7,
+                name: 'PostCSS',
+                path: '/assets/postcss.svg',
+            },
+            {
+                id: 8,
                 name: 'GSAP',
                 path: '/assets/gsap.png',
             },
@@ -312,18 +327,23 @@ export const myProjects = [
             },
             {
                 id: 2,
+                name: 'PyQt6',
+                path: '/assets/qt.svg',
+            },
+            {
+                id: 3,
                 name: 'PyInstaller',
                 path: '/assets/pyinstaller.png',
             },
             {
-                id: 3,
-                name: 'Data Processing',
-                path: '/assets/data.png',
+                id: 4,
+                name: 'setuptools',
+                path: '/assets/setuptools.png',
             },
             {
-                id: 4,
-                name: 'PyQt6',
-                path: '/assets/qt.svg',
+                id: 5,
+                name: 'Data Processing',
+                path: '/assets/data.png',
             },
         ],
     },

@@ -1,8 +1,0 @@
-const App = () => {
-                    return (
-                    <main className="max-w-8xl mx-auto">
-                    <GlitchEffect text="Hello World! <span class='waving-hand'>👋</span>" />
-                {/* Other components */}
-                </main>
-                );
-                };
