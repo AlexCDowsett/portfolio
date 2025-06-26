@@ -18,11 +18,12 @@ const techStack = [
         experience: "3 years",
         level: 60,
         technologies: [
-            { name: "VHDL", imgSrc: "/assets/vhdl.svg" },
             { name: "C++", imgSrc: "/assets/cpp.svg" },
             { name: "C", imgSrc: "/assets/c.svg" },
             { name: "Git", imgSrc: "/assets/git.svg" },
             { name: "Docker", imgSrc: "/assets/docker.svg" },
+            { name: "Vivado", imgSrc: "/assets/vivado.png" },
+            { name: "FPGA", imgSrc: "/assets/vhdl.svg" },
         ]
     },
     {
@@ -37,6 +38,7 @@ const techStack = [
             { name: "Tailwind CSS", imgSrc: "/assets/tailwind.svg" },
             { name: "Vite", imgSrc: "/assets/vite.svg" },
             { name: "Next.js", imgSrc: "/assets/nextjs.svg" },
+            { name: "Three.js", imgSrc: "/assets/threejs-inverted.png" },
         ]
     }
 ];
@@ -299,9 +301,9 @@ const styles = {
         flexDirection: "column",
         gap: "10px",
         width: "300px",
-        '@media (min-width: 1024px)': {  // This won't work directly - we'll use className instead
-            width: "33%",
-        }
+        // '@media (min-width: 1024px)': {  // This won't work directly - we'll use className instead
+        //     width: "33%",
+        // }
     },
     textContainer: {
         display: "flex",
@@ -327,10 +329,10 @@ const styles = {
         objectFit: "contain",
         transformOrigin: "center bottom",
         position: "relative",
-        '@media (min-width: 1024px)': {  // This won't work directly - we'll use className instead
-            width: "48px",
-            height: "48px",
-        }
+        // '@media (min-width: 1024px)': {  // This won't work directly - we'll use className instead
+        //     width: "48px",
+        //     height: "48px",
+        // }
     },
     progressBarContainer: {
         flex: 1,

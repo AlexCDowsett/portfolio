@@ -68,17 +68,28 @@ const NavItems = ({ toggleMenu }) => {
         <ul className="nav-ul">
             {navLinks.map(({ id, href, name }) => (
                 <li key={id} className="nav-li">
-                    <a
-                        href={href}
-                        className="nav-li_a"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            handleNavigation(href);
-                        }}
-                        target={name === "CV" ? "_blank" : "_self"}
-                    >
-                        <p className={`${name === "CV" ? "stylish-font" : ""}`}>{name}</p>
-                    </a>
+                    {name === "CV" ? (
+                        <a
+                            href={href}
+                            className="nav-li_a"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <p className="stylish-font">{name}</p>
+                        </a>
+                    ) : (
+                        <a
+                            href={href}
+                            className="nav-li_a"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleNavigation(href);
+                            }}
+                            target="_self"
+                        >
+                            <p>{name}</p>
+                        </a>
+                    )}
                 </li>
             ))}
         </ul>
@@ -102,14 +113,8 @@ const Navbar = () => {
 
     // Log the conditions whenever they change
     useEffect(() => {
-        console.log("Debugging visibility states:", {
-            isAboutVisible,
-            isExperienceVisible,
-            isProjectsVisible,
-            isContactVisible,
-            isMobile,
-            isOpen
-        });
+        // console.log("Debugging visibility states:", {
+        // ... existing code ...
     }, [isMobile, isOpen, isProjectsVisible, isAboutVisible, isExperienceVisible, isContactVisible]);
 
     return (

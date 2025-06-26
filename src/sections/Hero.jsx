@@ -103,22 +103,22 @@ const Hero = forwardRef((props, ref) => {
                 
                 {/* Show the text only after 1 second */}
                 {showText && (
-                    <motion.p
+                    <motion.div
                         className="text-gray_gradient"
                         initial={{ opacity: 0, y: -20 }} // Start off-screen and transparent
                         animate={{ opacity: 1, y: 0 }} // Fade in and move to original position
                         transition={{ duration: 0.5 }} // Duration of the animation
                     >
                         <div className="flex justify-center"> {/* Align text to the right */}
-                            <p className="sm:text-3xl text-xl font-medium text-white text-center font-generalsans">
+                            <span className="sm:text-3xl text-xl font-medium text-white text-center font-generalsans">
                                 <GlitchEffect text="Hi, I'm Alex" textColor="#FFFFFF" bgColor="#000000" glitchInterval={100} />
                                 <span className={isGlitching ? "" : "waving-hand"}>{emoji}</span>
-                            </p>
+                            </span>
                         </div>
-                        <p className="hero_tag text-gray-gradient text-center"> {/* Center the tag */}
+                        <span className="hero_tag text-gray-gradient text-center block"> {/* Center the tag */}
                             An aspiring full-stack developer
-                        </p>
-                    </motion.p>
+                        </span>
+                    </motion.div>
                 )}
 
                 <div className="w-full h-full absolute inset-0">

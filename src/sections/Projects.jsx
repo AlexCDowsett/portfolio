@@ -1,5 +1,5 @@
 import {myProjects} from "../constants/index.js";
-import {Suspense, useState, useEffect, useRef} from "react";
+import {Suspense, useState, useEffect, useRef, forwardRef} from "react";
 import {Canvas} from "@react-three/fiber";
 import {Center, OrbitControls, SpotLight} from "@react-three/drei";
 import CanvasLoader from "../components/CanvasLoader.jsx";
@@ -14,10 +14,10 @@ const projectCount = myProjects.length;
 
 
 
-const Projects = () => {
+const Projects = forwardRef((props, ref) => {
     
     const [isVisible, setIsVisible] = useState(false);
-    const projectsRef = useRef(null);
+    const projectsRef = ref || useRef(null);
     const { setIsProjectsVisible } = useScroll();
 
     const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
@@ -443,6 +443,6 @@ const Projects = () => {
             <div id="projects-end-spacer" className={`h-screen ${isMobile ? '' : 'hidden'}`}></div>
         </section>
     )
-}
+})
 
-export default Projects
+export default Projects;

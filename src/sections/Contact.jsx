@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from "react";
+import React, {useRef, useState, useEffect, forwardRef} from "react";
 import emailJS from '@emailjs/browser';
 import {useMediaQuery} from "react-responsive";
 import confetti from "canvas-confetti";
@@ -9,8 +9,8 @@ import GlitchEffect from "../components/Glitch.jsx";
 import {useScroll} from '../context/ScrollContext.jsx';
 
 
-const Contact = () => {
-    const contactRef = useRef(null);
+const Contact = forwardRef((props, ref) => {
+    const contactRef = ref || useRef(null);
     const {setIsContactVisible} = useScroll();
     const [isVisible, setIsVisible] = useState(false);
     const formRef = useRef();
@@ -64,7 +64,7 @@ const Contact = () => {
 
         } catch (error) {
             setLoading(false)
-            console.log(error)
+            // console.log(error)
             //alert('Something went wrong. Please try again later.')
             setNotifications((pv) => [{
                 id: Math.random(),
@@ -186,7 +186,7 @@ const Contact = () => {
                 </AnimatePresence>
             </div>
         </section>
-    
-    )
-}
-export default Contact
+    );
+});
+
+export default Contact;

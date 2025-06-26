@@ -130,7 +130,7 @@ const About = forwardRef((props, ref) => {
                 setHasCopied(false);
             }, 2500);
         } catch (err) {
-            console.error('Clipboard API failed, falling back to textarea method:', err);
+            // console.error('Clipboard API failed, falling back to textarea method:', err);
 
             // Fallback to the temporary textarea method
             const textArea = document.createElement('textarea');
@@ -226,7 +226,7 @@ const About = forwardRef((props, ref) => {
                                 text={aboutContent.location.title} bgColor="#100c14"
                                 textColor="#ffffff" glitchInterval={15}/></p>
                             <p className="grid-subtext pb-2">{aboutContent.location.description}</p>
-                            <a href="#contact" className="block w-full flex justify-center">
+                            <a href="#contact" className="block w-full justify-center">
                                 <Button
                                     name="Contact Me" 
                                     isBeam 

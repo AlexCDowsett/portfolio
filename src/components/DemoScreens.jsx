@@ -1,65 +1,11 @@
-import React, {useRef} from 'react'
+import React, {useRef, useEffect} from 'react'
 import {SpotLight, useAnimations, useGLTF, useTexture, useVideoTexture} from '@react-three/drei'
 import {RepeatWrapping} from "three";
 import gsap from 'gsap';
 import {useGSAP} from "@gsap/react";
-import {useControls} from "leva";
 import {ScreenLocations, myProjects} from "../constants/index.js";
 
 const DemoScreens = (props) => {
-
-
-    {/*const x = useControls('DemoScreens', {
-        location: {
-            value: 0,
-            min: 0,
-            max: 7,
-            step: 1,
-        },
-
-        positionX: {
-            value: 0,
-            min: -20,
-            max: 20,
-            step: 0.05,
-        },
-        positionY: {
-            value: 0,
-            min: -20,
-            max: 20,
-            step: 0.05,
-        },
-        positionZ: {
-            value: 0,
-            min: -20,
-            max: 20,
-            step: 0.05,
-        },
-        rotationX: {
-            value: 0,
-            min: -Math.PI / 2,
-            max: +Math.PI / 2,
-            step: 0.05,
-        },
-        rotationY: {
-            value: 0,
-            min: -Math.PI / 2,
-            max: +Math.PI / 2,
-            step: 0.05,
-        },
-        rotationZ: {
-            value: 0,
-            min: -Math.PI / 2,
-            max: +Math.PI / 2,
-            step: 0.05,
-        },
-        scale: {
-            value: 1,
-            min: 0,
-            max: 10,
-        }
-
-    })*/}
 
     const group = useRef();
     const {nodes, materials, animations} = useGLTF('/models/old_computers.glb')
@@ -67,8 +13,6 @@ const DemoScreens = (props) => {
 
     // Load textures from myProjects (excluding the first project)
     const projectTextures = myProjects.slice(1).map(project => {
-        console.log('Loading texture for project:', project.title);
-        console.log('Texture path:', project.texture);
         try {
             const texture = useVideoTexture(project.texture, {
                 muted: true,
@@ -77,39 +21,34 @@ const DemoScreens = (props) => {
                 loop: true,
                 start: true,
                 onError: (error) => {
-                    console.error(`Video texture error for ${project.title}:`, error);
+                    // console.error(`Video texture error for ${project.title}:`, error);
                 }
             });
 
-            if (!texture) {
-                console.error(`Texture is null for ${project.title}`);
-                return null;
-            }
-
-            console.log('Successfully loaded texture for:', project.title);
-            texture.wrapS = texture.wrapT = RepeatWrapping;
-            texture.offset.x = 0.375;
-            texture.offset.y = 0.64;
-            texture.repeat.x = 4.3;
-            texture.repeat.y = 5;
+            // Move mutations to useEffect below
             return texture;
         } catch (error) {
-            console.error(`Failed to load texture for ${project.title}:`, error);
-            console.error('Error details:', {
-                message: error.message,
-                stack: error.stack,
-                texture: project.texture
-            });
             return null;
         }
     });
 
+    // Mutate projectTextures after they are loaded
+    useEffect(() => {
+        projectTextures.forEach((texture, i) => {
+            if (texture) {
+                const project = myProjects[i + 1]; // since you slice(1)
+                const offset = project?.textureOffset || { x: 0, y: 0 };
+                const repeat = project?.textureRepeat || { x: 1, y: 1 };
+                texture.wrapS = texture.wrapT = RepeatWrapping;
+                texture.offset.x = offset.x;
+                texture.offset.y = offset.y;
+                texture.repeat.x = repeat.x;
+                texture.repeat.y = repeat.y;
+            }
+        });
+    }, [projectTextures]);
+
     const txtStatic = useVideoTexture('/textures/static.mp4', {playsInline: true,});
-    txtStatic.wrapS = txtStatic.wrapT = RepeatWrapping;
-    txtStatic.offset.x = -0.15;
-    txtStatic.offset.y = -1.4;
-    txtStatic.repeat.x = 3.9;
-    txtStatic.repeat.y = 3.5;
 
     const txtBlue = useTexture('/textures/bluescreen2.png')
     txtBlue.wrapS = txtBlue.wrapT = RepeatWrapping;
@@ -119,11 +58,22 @@ const DemoScreens = (props) => {
     txtBlue.repeat.y = 4;
 
     const txtAn = useTexture('/textures/Anthony.png')
-    txtAn.wrapS = txtBlue.wrapT = RepeatWrapping;
-    txtAn.offset.x = 0.5;
-    txtAn.offset.y = -2.67;
-    txtAn.repeat.x = 4.0;
-    txtAn.repeat.y = 5.5;
+    txtAn.wrapS = txtAn.wrapT = RepeatWrapping;
+            txtAn.offset.x = 0.5;
+            txtAn.offset.y = -2.67;
+            txtAn.repeat.x = 4.0;
+            txtAn.repeat.y = 5.5;
+
+    // Mutate txtStatic after it is loaded
+    useEffect(() => {
+        if (txtStatic) {
+            txtStatic.wrapS = txtStatic.wrapT = RepeatWrapping;
+            txtStatic.offset.x = -0.15;
+            txtStatic.offset.y = -1.4;
+            txtStatic.repeat.x = 3.9;
+            txtStatic.repeat.y = 3.5;
+        }
+    }, [txtStatic]);
 
 
     useGSAP(() => {
@@ -168,11 +118,7 @@ const DemoScreens = (props) => {
     }, [props.count]);
 
     return (
-        <group ref={group}{...props} dispose={null}
-               //position={[x.positionX, x.positionY, x.positionZ]}
-               //rotation={[x.rotationX, x.rotationY, x.rotationZ]}
-               //scale={[x.scale, x.scale, x.scale]}
-            >
+        <group ref={group}{...props} dispose={null}>
 
             <ambientLight intensity={0.2}/>
             <directionalLight position={[5, 10, 0]} intensity={0.1} color={'white'}/>
@@ -186,7 +132,8 @@ const DemoScreens = (props) => {
                 decay={0.5}
                 distance={25}/>
             <group name="Screen_4"
-                   position={[0.27, 1.529, -2.613]}>
+                   position={[0.27, 1.529, -2.613]}
+                   scale={[1, 1, 1]}>
 
                 <mesh
                     name="Object_206"
@@ -211,7 +158,8 @@ const DemoScreens = (props) => {
             </group>
             <group name="Screen_3"
                    position={[-1.43, 2.496, -1.8]}
-                   rotation={[0, 1.002, 0]}>
+                   rotation={[0, 1.002, 0]}
+                   scale={[1, 1, 1]}>
                 <mesh
                     name="Object_209"
                     castShadow
@@ -249,13 +197,14 @@ const DemoScreens = (props) => {
                     receiveShadow
                     geometry={nodes.Object_213.geometry}
                     material={materials.Screen}>
-                    <meshMatcapMaterial map={txtBlue}/>
+                    <meshBasicMaterial map={txtBlue} toneMapped={false} />
                 </mesh>
             </group>
             <group
                 name="Screen_5"
                 position={[1.845, 0.377, -1.771]}
-                rotation={[0, -Math.PI / 9, 0]}>
+                rotation={[0, -Math.PI / 9, 0]}
+                scale={[1, 1, 1]}>
                 <mesh
                     name="Object_215"
                     castShadow
@@ -281,7 +230,7 @@ const DemoScreens = (props) => {
                 name="Screen_6"
                 position={[3.11, 2.145, -0.18]}
                 rotation={[0, -0.793, 0]}
-                scale={0.81}>
+                scale={[1, 1, 1]}>
                 <mesh
                     name="Object_218"
                     castShadow
@@ -307,7 +256,7 @@ const DemoScreens = (props) => {
                 name="Screen_1"
                 position={[-3.417, 3.056, 1.303]}
                 rotation={[0, 1.222, 0]}
-                scale={0.9}>
+                scale={[1, 1, 1]}>
                 <mesh
                     name="Object_221"
                     castShadow
@@ -331,7 +280,8 @@ const DemoScreens = (props) => {
             </group>
             <group name="Screen_2"
                    position={[-3.899, 4.287, -2.642]}
-                   rotation={[0, 0.539, 0]}>
+                   rotation={[0, 0.539, 0]}
+                   scale={[1, 1, 1]}>
                 <mesh
                     name="Object_224"
                     castShadow

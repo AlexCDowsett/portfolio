@@ -3,7 +3,7 @@ import {useState} from "react";
 const Footer = () => {
     return (
         <section className="relative bg-black z-10">
-        <group className="border-t border-black-300 flex justify-center gap-7 pt-3 pb-2.5 sm:hidden wrap items-center">
+        <div className="border-t border-black-300 flex justify-center gap-7 pt-3 pb-2.5 sm:hidden wrap items-center">
         <a href="https://github.com/AlexCDowsett" target="_blank" title="GitHub">
                     <div className="social-icon">
                         <img src="/assets/github.svg" alt="github" className="w-1/2 h-1/2"/>
@@ -26,8 +26,8 @@ const Footer = () => {
                         <img src="/assets/leetcode.svg" alt="leetcode" className="w-1/2 h-1/2"/>
                     </div>
                 </a>
-        </group>
-        <group className="c-space sm:pt-7 lg:pb-1 lg:border-t md:border-t sm:border-t border-black-300 justify-between items-center wrap gap-3 xl:gap-5 flex">
+        </div>
+        <div className="c-space sm:pt-7 lg:pb-1 lg:border-t md:border-t sm:border-t border-black-300 justify-between items-center wrap gap-3 xl:gap-5 flex">
             <div className="text-white-500 text-s text-s sm:text-md md:text-lg lg:flex xl:pl-10">
                 <a href="/legal#terms" className="hover:text-white transition-colors">
                     <p>Terms & Conditions</p>
@@ -72,7 +72,7 @@ const Footer = () => {
                     </div>
                 </a> 
             </div>
-        </group>
+        </div>
         </section>
 
     )

@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/cv-general",
+      "destination": "/CV-general.pdf"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

@@ -33,8 +33,8 @@ const HeroCamera = ({children, isMobile}) => {
             // Start from far away and zoom in
             easing.damp3(state.camera.position, [0, 0, 20], 0.5, delta);
         } else {
-            // Normal camera behavior after zoom
-            easing.damp3(state.camera.position, [0, 0, 10], 100.25, delta);
+            // After initial zoom, keep camera at z=20
+            state.camera.position.set(0, 0, 20);
         }
     });
 
