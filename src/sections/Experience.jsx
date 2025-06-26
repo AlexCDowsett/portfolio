@@ -34,7 +34,7 @@ const Experience = () => {
 
     return (
         <section ref={experienceRef} className="c-space my-20">
-            <div className="w=full text-white-600">
+            <div className="w-full text-white-600">
                 <h3 className="head-text">My Work Experience</h3>
 
                 <div className="work-container">

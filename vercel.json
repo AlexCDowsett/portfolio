@@ -1,11 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/cv",
+      "source": "/CV",
       "destination": "/CV.pdf"
     },
     {
-      "source": "/cv-general",
+      "source": "/CV-general",
       "destination": "/CV-general.pdf"
     },
     {

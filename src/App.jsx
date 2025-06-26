@@ -8,6 +8,7 @@ import Experience from "./sections/Experience.jsx";
 import Contact from "./sections/Contact.jsx";
 import Footer from "./sections/Footer.jsx";
 import Legal from "./pages/Legal.jsx";
+import NotFound from "./pages/404.jsx";
 import { ScrollProvider } from './context/ScrollContext.jsx';
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
                         </main>
                     } />
                     <Route path="/legal" element={<Legal />} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </ScrollProvider>
         </Router>
