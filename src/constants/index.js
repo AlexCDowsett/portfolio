@@ -328,13 +328,13 @@ export const myProjects = [
             },
             {
                 id: 3,
-                name: 'PyInstaller',
-                path: '/assets/pyinstaller.png',
+                name: 'Pandas',
+                path: '/assets/pandas.svg',
             },
             {
                 id: 4,
-                name: 'Pandas',
-                path: '/assets/pandas.svg',
+                name: 'PyInstaller',
+                path: '/assets/pyinstaller.png',
             },
         ],
     },
