@@ -8,6 +8,12 @@ import Notification from "../components/SlideInNotifications.jsx";
 import GlitchEffect from "../components/Glitch.jsx";
 import {useScroll} from '../context/ScrollContext.jsx';
 
+// Environment variables
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL;
+const CONTACT_NAME = import.meta.env.VITE_CONTACT_NAME;
 
 const Contact = forwardRef((props, ref) => {
     const contactRef = ref || useRef(null);
@@ -36,16 +42,16 @@ const Contact = forwardRef((props, ref) => {
         setLoading(true)
 
         try {
-            await emailJS.send('service_3fcgccr',
-                'template_zwxs9np',
+            await emailJS.send(EMAILJS_SERVICE_ID,
+                EMAILJS_TEMPLATE_ID,
                 {
                     from_name: form.name,
-                    to_name: 'Alex',
+                    to_name: CONTACT_NAME,
                     from_email: form.email,
-                    to_email: 'alexcdowsett@gmail.com',
+                    to_email: CONTACT_EMAIL,
                     message: form.message
                 },
-                'CQuAeenkDXhJ-N2_h')
+                EMAILJS_PUBLIC_KEY)
             setLoading(false)
 
             setForm({
@@ -172,8 +178,8 @@ const Contact = forwardRef((props, ref) => {
                     </p>
 
 
-                        <a href="mailto:alex@dowsett.dev">
-                        <p className="text-center text-xl lg:text-2xl font-medium text-white lg:mb-10 hover:text-blue-400 hover:underline">alex@dowsett.dev</p>
+                        <a href={`mailto:${CONTACT_EMAIL}`}>
+                        <p className="text-center text-xl lg:text-2xl font-medium text-white lg:mb-10 hover:text-blue-400 hover:underline">{CONTACT_EMAIL}</p>
                         </a>
                 </div>
             </div>

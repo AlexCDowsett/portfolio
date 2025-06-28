@@ -9,6 +9,9 @@ import Button from "../components/Button.jsx";
 import HeroCamera from "../components/HeroCamera.jsx";
 import { motion } from "framer-motion";
 
+// Environment variables
+const PERSONAL_NAME = import.meta.env.VITE_PERSONAL_NAME || 'Alex';
+
 const handEmojis = ["👋", "✋", "🤚", "🖐️", "🖖"]; // Array of hand emojis
 
 const Hero = forwardRef((props, ref) => {
@@ -111,7 +114,7 @@ const Hero = forwardRef((props, ref) => {
                     >
                         <div className="flex justify-center"> {/* Align text to the right */}
                             <span className="sm:text-3xl text-xl font-medium text-white text-center font-generalsans">
-                                <GlitchEffect text="Hi, I'm Alex" textColor="#FFFFFF" bgColor="#000000" glitchInterval={100} />
+                                <GlitchEffect text={`Hi, I'm ${PERSONAL_NAME}`} textColor="#FFFFFF" bgColor="#000000" glitchInterval={100} />
                                 <span className={isGlitching ? "" : "waving-hand"}>{emoji}</span>
                             </span>
                         </div>

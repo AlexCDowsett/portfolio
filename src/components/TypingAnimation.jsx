@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 
+// Environment variables
+const PORTFOLIO_TITLE = import.meta.env.VITE_PORTFOLIO_TITLE || "Alex's Portfolio";
+
 const TypingAnimation = () => {
     const [opacity, setOpacity] = useState(0);
     const typedRef = useRef(null);
@@ -42,7 +45,7 @@ const TypingAnimation = () => {
         // Custom animation function
         const animateTyping = () => {
             const firstString = "dowsett.dev";
-            const secondString = "Alex's Portfolio";
+            const secondString = PORTFOLIO_TITLE;
             let currentText = "";
             
             // Type the first string
@@ -113,7 +116,7 @@ const TypingAnimation = () => {
                                             cursorRef.current.style.opacity = '0';
                                             clearInterval(typeSecondString);
                                             document.title = currentText
-                                            // Final state is "Alex's Portfolio"
+                                            // Final state is the portfolio title from environment variable
                                         }
                                     }, SECOND_STRING_TYPE_SPEED);
                                     intervals.push(typeSecondString);

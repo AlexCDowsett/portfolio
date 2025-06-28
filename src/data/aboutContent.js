@@ -1,6 +1,10 @@
-{
+// Environment variables
+const PERSONAL_NAME = import.meta.env.VITE_PERSONAL_NAME || 'Alex Dowsett';
+const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'alex@dowsett.dev';
+
+export const aboutContent = {
     "introduction": {
-        "title": "Hi, I'm Alex Dowsett",
+        "title": `Hi, I'm ${PERSONAL_NAME}`,
         "description": "As a recent graduate, from Univerisity of Surrey and 12 years of experience, I have honed my skills in backend dev with an introduction to frontend with this portfolio, creating elegant and responsive software solutions."
     },
     "passion": {
@@ -17,6 +21,6 @@
     },
     "contact": {
         "title": "Contact me",
-        "email": "alex@dowsett.dev"
+        "email": CONTACT_EMAIL
     }
-} 
+}; 

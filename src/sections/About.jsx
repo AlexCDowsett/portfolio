@@ -8,7 +8,7 @@ import World from "../components/World.jsx";
 import TechStack from "../components/TechStack.jsx";
 import Notification from "../components/SlideInNotifications.jsx";
 import { AnimatePresence } from "framer-motion";
-import aboutContent from '../data/aboutContent.json';
+import { aboutContent } from '../data/aboutContent.js';
 
 const fadeVariants = {
     leftToRight: {

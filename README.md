@@ -38,10 +38,46 @@ cd portfolio
 npm install
 ```
 
-3. Start the development server:
+3. Set up environment variables:
+```bash
+cp .env.example .env
+```
+
+4. Configure your environment variables in the `.env` file (see Environment Setup section below)
+
+5. Start the development server:
 ```bash
 npm run dev
 ```
+
+## 🔧 Environment Setup
+
+This project uses environment variables to keep sensitive information secure. Create a `.env` file in the root directory with the following variables:
+
+```env
+# EmailJS Configuration
+VITE_EMAILJS_SERVICE_ID=your_service_id_here
+VITE_EMAILJS_TEMPLATE_ID=your_template_id_here
+VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
+
+# Contact Information
+VITE_CONTACT_EMAIL=your_email@example.com
+VITE_CONTACT_NAME=Your Name
+
+# Personal Information
+VITE_PERSONAL_NAME=Your Name
+VITE_PORTFOLIO_TITLE=Your Portfolio
+```
+
+### Setting up EmailJS:
+
+1. Create an account at [EmailJS](https://www.emailjs.com/)
+2. Create an email service (Gmail, Outlook, etc.)
+3. Create an email template
+4. Get your public key from the EmailJS dashboard
+5. Add these credentials to your `.env` file
+
+**Note:** The `.env` file is already added to `.gitignore` to prevent sensitive information from being committed to version control.
 
 ## 🔧 Available Scripts
 
