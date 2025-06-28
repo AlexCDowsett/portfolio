@@ -174,7 +174,7 @@ const About = forwardRef((props, ref) => {
                         custom={isMobile}
                     >
                         <img src="/assets/grid1.png" alt="grid-1" 
-                            className="object-cover object-top flex-grow w-full h-full max-h-[200px] sm:max-h-[300px] mb-5 aspect-[1/1]"/>
+                            className="object-cover object-top flex-grow w-full h-full max-h-[300px] sm:max-h-[400px] mb-5 aspect-[1/1]"/>
 
                         <div className="flex flex-col justify-end w-full h-full pb-3 lg:pb-5">
                             <p className="grid-headtext"><GlitchEffect text={aboutContent.introduction.title} bgColor="#100c14"
@@ -195,7 +195,7 @@ const About = forwardRef((props, ref) => {
                         custom={isMobile}
                     >
                         <img src="/assets/grid3.png" alt="grid-3"
-                             className="object-cover flex-grow w-full max-h-[200px] sm:max-h-[300px] mb-5  aspect-[1/1]"/>
+                             className="object-cover flex-grow w-full max-h-[200px] sm:max-h-[400px] mb-5  aspect-[1/1]"/>
 
                         <div className="flex flex-col justify-end w-full h-full pb-3 lg:pb-5">
                             <p className="grid-headtext"><GlitchEffect text={aboutContent.passion.title} bgColor="#100c14"
