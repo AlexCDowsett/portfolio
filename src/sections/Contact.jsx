@@ -15,6 +15,18 @@ const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL;
 const CONTACT_NAME = import.meta.env.VITE_CONTACT_NAME;
 
+// Initialize EmailJS
+emailJS.init(EMAILJS_PUBLIC_KEY);
+
+// Debug logging for production troubleshooting
+console.log('EmailJS Config:', {
+    serviceId: EMAILJS_SERVICE_ID,
+    templateId: EMAILJS_TEMPLATE_ID,
+    publicKey: EMAILJS_PUBLIC_KEY ? `${EMAILJS_PUBLIC_KEY.substring(0, 8)}...` : 'undefined',
+    contactEmail: CONTACT_EMAIL,
+    contactName: CONTACT_NAME
+});
+
 const Contact = forwardRef((props, ref) => {
     const contactRef = ref || useRef(null);
     const {setIsContactVisible} = useScroll();
@@ -41,17 +53,23 @@ const Contact = forwardRef((props, ref) => {
         e.preventDefault();
         setLoading(true)
 
+        // Additional debugging for the submit process
+        console.log('Submitting form with config:', {
+            serviceId: EMAILJS_SERVICE_ID,
+            templateId: EMAILJS_TEMPLATE_ID,
+            publicKey: EMAILJS_PUBLIC_KEY ? `${EMAILJS_PUBLIC_KEY.substring(0, 8)}...` : 'undefined'
+        });
+
         try {
-            await emailJS.send(EMAILJS_SERVICE_ID,
+            // Use the correct EmailJS method
+            const result = await emailJS.sendForm(
+                EMAILJS_SERVICE_ID,
                 EMAILJS_TEMPLATE_ID,
-                {
-                    from_name: form.name,
-                    to_name: CONTACT_NAME,
-                    from_email: form.email,
-                    to_email: CONTACT_EMAIL,
-                    message: form.message
-                },
-                EMAILJS_PUBLIC_KEY)
+                formRef.current,
+                EMAILJS_PUBLIC_KEY
+            );
+            
+            console.log('EmailJS Success:', result);
             setLoading(false)
 
             setForm({
@@ -70,7 +88,7 @@ const Contact = forwardRef((props, ref) => {
 
         } catch (error) {
             setLoading(false)
-            // console.log(error)
+            console.error('EmailJS Error:', error);
             //alert('Something went wrong. Please try again later.')
             setNotifications((pv) => [{
                 id: Math.random(),
@@ -122,12 +140,16 @@ const Contact = forwardRef((props, ref) => {
                     </p>
 
                     <form ref={formRef} onSubmit={handleSubmit} className="mt-5 xl:mt-16 flex flex-col space-y-1 xl:space-y-7">
+                        {/* Hidden fields for EmailJS template */}
+                        <input type="hidden" name="to_name" value={CONTACT_NAME} />
+                        <input type="hidden" name="to_email" value={CONTACT_EMAIL} />
+                        
                         <label className='space-y-1 xl:space-y-3'>
                             <span className="field-label">Full Name</span>
 
                             <input
                                 type="text"
-                                name="name"
+                                name="from_name"
                                 value={form.name}
                                 onChange={handleChange}
                                 required
@@ -140,7 +162,7 @@ const Contact = forwardRef((props, ref) => {
 
                             <input
                                 type="email"
-                                name="email"
+                                name="from_email"
                                 value={form.email}
                                 onChange={handleChange}
                                 required
