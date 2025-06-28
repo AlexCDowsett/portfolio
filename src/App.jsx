@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Navbar from "./sections/Navbar.jsx";
 import Hero from "./sections/Hero.jsx";
 import About from "./sections/About.jsx";
@@ -36,6 +38,8 @@ const App = () => {
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </ScrollProvider>
+            <Analytics />
+            <SpeedInsights />
         </Router>
     );
 }
