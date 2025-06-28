@@ -61,15 +61,16 @@ const Contact = forwardRef((props, ref) => {
         });
 
         try {
-            // Use the correct EmailJS method
-            const result = await emailJS.sendForm(
-                EMAILJS_SERVICE_ID,
+            await emailJS.send(EMAILJS_SERVICE_ID,
                 EMAILJS_TEMPLATE_ID,
-                formRef.current,
-                EMAILJS_PUBLIC_KEY
-            );
-            
-            console.log('EmailJS Success:', result);
+                {
+                    from_name: form.name,
+                    to_name: CONTACT_NAME,
+                    from_email: form.email,
+                    to_email: CONTACT_EMAIL,
+                    message: form.message
+                },
+                EMAILJS_PUBLIC_KEY)
             setLoading(false)
 
             setForm({
@@ -140,16 +141,12 @@ const Contact = forwardRef((props, ref) => {
                     </p>
 
                     <form ref={formRef} onSubmit={handleSubmit} className="mt-5 xl:mt-16 flex flex-col space-y-1 xl:space-y-7">
-                        {/* Hidden fields for EmailJS template */}
-                        <input type="hidden" name="to_name" value={CONTACT_NAME} />
-                        <input type="hidden" name="to_email" value={CONTACT_EMAIL} />
-                        
                         <label className='space-y-1 xl:space-y-3'>
                             <span className="field-label">Full Name</span>
 
                             <input
                                 type="text"
-                                name="from_name"
+                                name="name"
                                 value={form.name}
                                 onChange={handleChange}
                                 required
@@ -162,7 +159,7 @@ const Contact = forwardRef((props, ref) => {
 
                             <input
                                 type="email"
-                                name="from_email"
+                                name="email"
                                 value={form.email}
                                 onChange={handleChange}
                                 required
