@@ -39,8 +39,7 @@ function RoomModel({ selectedIndex }) {
         artwork.set('Object_228', textures[6]);
         copy.traverse((object) => {
             if (object.name === 'Object_14') {
-                // Keep the original room bounds for Drei's Center calculation,
-                // but remove the large white floor from the visible scene.
+                // Hide the large white floor without removing it from the GLTF.
                 const materials = Array.isArray(object.material) ? object.material : [object.material];
                 const invisibleMaterials = materials.map((material) => {
                     const invisible = material.clone();
