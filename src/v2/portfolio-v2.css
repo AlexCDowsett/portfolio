@@ -41,6 +41,8 @@
     border-bottom: 1px solid var(--v2-line);
 }
 .v2-brand { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; letter-spacing: .015em; }
+.v2-brand-typewriter.is-typing::after { display: inline-block; margin-left: 2px; color: var(--v2-accent); content: '|'; animation: v2-caret-blink .8s steps(2, start) infinite; }
+@keyframes v2-caret-blink { to { visibility: hidden; } }
 .v2-brand-mark { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid rgba(168, 164, 255, .55); border-radius: 11px; color: var(--v2-accent); font-family: Manrope, sans-serif; font-weight: 800; }
 .v2-nav { display: flex; align-items: center; gap: 38px; color: #c1c3cc; font-size: 13px; }
 .v2-nav a, .v2-social-links a { transition: color .2s ease; }
@@ -205,7 +207,7 @@
 .v2-hero h1 { font-size: clamp(58px, 7vw, 90px); line-height: .99; }
 .v2-hero h1 span, .v2-section-heading h2 span, .v2-contact-copy h2 span { color: #8e715e; font-style: italic; }
 .v2-hero-intro { color: #5f675e; }
-.v2-button-primary { border-color: #344438; background: #344438; box-shadow: none; }
+.v2-button-primary { border-color: #344438; background: #344438; color: #fff !important; box-shadow: none; }
 .v2-button-primary:hover { background: #465748; }
 .v2-text-link, .v2-email-link { color: #7d4b36; }
 .v2-hero-footnote { color: #777d72; }
@@ -296,4 +298,9 @@
     .v2-room-detail { font-size: 13px; }
     .v2-legal-page { padding-top: 125px; padding-bottom: 70px; }
     .v2-legal-section p { font-size: 14px; }
+    .portfolio-v2 span[aria-hidden="true"] { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .v2-brand-typewriter.is-typing::after { animation: none; }
 }

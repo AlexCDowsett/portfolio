@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { navigation, site } from '../data/site.js';
 
-export function Navigation() {
+export function Navigation({ brandText = site.name, isTyping = false }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
         <header className="v2-header">
             <a className="v2-brand" href="/v2#home" aria-label={`${site.name}, home`}>
                 <span className="v2-brand-mark">A.</span>
-                <span>{site.name}</span>
+                <span className={`v2-brand-typewriter${isTyping ? ' is-typing' : ''}`}>{brandText}</span>
             </a>
             <button
                 className="v2-menu-toggle"
