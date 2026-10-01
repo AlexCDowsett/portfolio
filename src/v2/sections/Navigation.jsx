@@ -6,7 +6,7 @@ export function Navigation() {
 
     return (
         <header className="v2-header">
-            <a className="v2-brand" href="/v2/#home" aria-label={`${site.name}, home`}>
+            <a className="v2-brand" href="/v2#home" aria-label={`${site.name}, home`}>
                 <span className="v2-brand-mark">A.</span>
                 <span>{site.name}</span>
             </a>
@@ -21,7 +21,7 @@ export function Navigation() {
             </button>
             <nav id="v2-navigation" className={`v2-nav ${menuOpen ? 'is-open' : ''}`}>
                 {navigation.map((item) => (
-                    <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>
+                    <a key={item.href} href={`/v2${item.href}`} onClick={() => setMenuOpen(false)}>
                         {item.label}
                     </a>
                 ))}
