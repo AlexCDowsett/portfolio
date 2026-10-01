@@ -1,6 +1,6 @@
 import { Suspense, useMemo, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Center, Html, SpotLight, useGLTF, useTexture } from '@react-three/drei';
+import { Html, SpotLight, useGLTF, useTexture } from '@react-three/drei';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import * as THREE from 'three';
@@ -157,9 +157,9 @@ export function ProjectRoom({ selectedIndex, onPrevious, onNext }) {
         >
             <Canvas camera={{ position: [0, 0, 5], fov: 75 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }}>
                 <Suspense fallback={<LoadingRoom />}>
-                    <Center>
+                    <group>
                         <RoomModel selectedIndex={selectedIndex} />
-                    </Center>
+                    </group>
                 </Suspense>
             </Canvas>
             <span className="v2-mobile-swipe-cue">Swipe to change projects</span>
