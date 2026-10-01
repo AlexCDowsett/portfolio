@@ -1,6 +1,6 @@
-import { Suspense, useEffect, useMemo, useRef } from 'react';
-import { Canvas, useThree } from '@react-three/fiber';
-import { Html, OrbitControls, SpotLight, useGLTF, useTexture } from '@react-three/drei';
+import { Suspense, useMemo, useRef } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { Center, Html, SpotLight, useGLTF, useTexture } from '@react-three/drei';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import * as THREE from 'three';
@@ -38,6 +38,20 @@ function RoomModel({ selectedIndex }) {
         artwork.set('Object_213', textures[0]);
         artwork.set('Object_228', textures[6]);
         copy.traverse((object) => {
+            if (object.name === 'Object_14') {
+                // Keep the original room bounds for Drei's Center calculation,
+                // but remove the large white floor from the visible scene.
+                const materials = Array.isArray(object.material) ? object.material : [object.material];
+                const invisibleMaterials = materials.map((material) => {
+                    const invisible = material.clone();
+                    invisible.transparent = true;
+                    invisible.opacity = 0;
+                    invisible.depthWrite = false;
+                    return invisible;
+                });
+                object.material = Array.isArray(object.material) ? invisibleMaterials : invisibleMaterials[0];
+                return;
+            }
             const texture = artwork.get(object.name);
             if (texture && object.isMesh) {
                 texture.colorSpace = THREE.SRGBColorSpace;
@@ -49,8 +63,7 @@ function RoomModel({ selectedIndex }) {
                 texture.magFilter = THREE.LinearFilter;
                 texture.needsUpdate = true;
                 object.geometry = fitScreenUv(object.geometry);
-                object.material = new THREE.MeshBasicMaterial({ map: texture, toneMapped: false, side: THREE.DoubleSide, depthTest: false, depthWrite: false });
-                object.renderOrder = 999;
+                object.material = new THREE.MeshBasicMaterial({ map: texture, toneMapped: false, side: THREE.DoubleSide });
             }
         });
         return copy;
@@ -60,9 +73,7 @@ function RoomModel({ selectedIndex }) {
         if (!focusGroup.current) return;
         const focusIndex = projectFocusLocations[selectedIndex];
         const focus = ScreenLocations[focusIndex];
-        gsap.killTweensOf([focusGroup.current.position, focusGroup.current.rotation]);
-        const timeline = gsap.timeline();
-        timeline
+        gsap.timeline()
             .to(focusGroup.current.position, {
                 x: focusIndex ? '/=1.2' : '+=0',
                 y: focusIndex ? '/=1.2' : '+=0',
@@ -72,18 +83,20 @@ function RoomModel({ selectedIndex }) {
             })
             .to(focusGroup.current.position, {
                 x: focus.pX, y: focus.pY, z: focus.pZ, duration: 2, ease: 'power3.out',
-            })
+            });
+
+        gsap.timeline()
             .to(focusGroup.current.rotation, {
                 x: focusIndex ? '/=1.2' : '+=0',
                 y: focusIndex ? '/=1.2' : '+=0',
                 z: focusIndex ? '/=1.2' : '+=0',
                 duration: 0.3,
                 ease: 'power1.out',
-            }, '<')
+            })
             .to(focusGroup.current.rotation, {
                 x: focus.rX, y: focus.rY, z: focus.rZ, duration: 2, ease: 'power3.out',
-            }, '<');
-    }, { dependencies: [selectedIndex] });
+            });
+    }, { dependencies: [selectedIndex], scope: focusGroup, revertOnUpdate: true });
 
     return (
         <group position={[0, -2.5, -1]} rotation={[0.2, -0.1, 0]} scale={0.9}>
@@ -98,32 +111,59 @@ function RoomModel({ selectedIndex }) {
     );
 }
 
-function ResponsiveCamera() {
-    const { camera, size } = useThree();
-    useEffect(() => {
-        camera.position.set(0, 0.8, size.width < 600 ? 11.5 : 9);
-        camera.lookAt(0, 0, 0);
-        camera.updateProjectionMatrix();
-    }, [camera, size.width]);
-    return null;
-}
-
 function LoadingRoom() {
     return <Html center><span className="v2-room-loading">Waking the old computers…</span></Html>;
 }
 
-export function ProjectRoom({ selectedIndex }) {
+export function ProjectRoom({ selectedIndex, onPrevious, onNext }) {
+    const touchStartX = useRef(null);
+    const touchCurrentX = useRef(null);
+    const lastSwipeAt = useRef(0);
+
+    const handleTouchStart = (event) => {
+        const startX = event.touches.length === 1 ? event.touches[0].clientX : null;
+        touchStartX.current = startX;
+        touchCurrentX.current = startX;
+    };
+
+    const handleTouchMove = (event) => {
+        if (touchStartX.current === null || event.touches.length !== 1) return;
+        touchCurrentX.current = event.touches[0].clientX;
+    };
+
+    const handleTouchEnd = (event) => {
+        if (touchStartX.current === null) return;
+        const startX = touchStartX.current;
+        const touch = event.changedTouches[0];
+        touchStartX.current = null;
+        const endX = touch?.clientX ?? touchCurrentX.current;
+        touchCurrentX.current = null;
+        if (endX === null || endX === undefined || Date.now() - lastSwipeAt.current < 450) return;
+        const distance = startX - endX;
+        if (Math.abs(distance) < 50) return;
+        lastSwipeAt.current = Date.now();
+        if (distance > 0) onNext?.();
+        else onPrevious?.();
+    };
+
     return (
-        <div className="v2-room-canvas" aria-label="Interactive 3D room of computers showing project screens">
-            <Canvas camera={{ position: [0, 0.8, 9], fov: 48 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }}>
-                <color attach="background" args={['#e9e7dc']} />
-                <ResponsiveCamera />
+        <div
+            className="v2-room-canvas"
+            aria-label="Project room. Swipe left or right to change projects."
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onTouchCancel={() => { touchStartX.current = null; touchCurrentX.current = null; }}
+        >
+            <Canvas camera={{ position: [0, 0, 5], fov: 75 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }}>
                 <Suspense fallback={<LoadingRoom />}>
-                    <RoomModel selectedIndex={selectedIndex} />
-                    <OrbitControls enablePan={false} enableZoom minDistance={6} maxDistance={14} minPolarAngle={0.85} maxPolarAngle={2.1} rotateSpeed={0.55} />
+                    <Center>
+                        <RoomModel selectedIndex={selectedIndex} />
+                    </Center>
                 </Suspense>
             </Canvas>
-            <span className="v2-room-caption" aria-hidden="true">PROJECT ROOM · DRAG TO LOOK AROUND</span>
+            <span className="v2-mobile-swipe-cue">Swipe to change projects</span>
+            <span className="v2-room-caption" aria-hidden="true">PROJECT ROOM · SELECT A PROJECT</span>
         </div>
     );
 }
