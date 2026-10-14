@@ -1,118 +1,41 @@
-# Personal Portfolio Website
+# Alex Dowsett — Portfolio
 
-A modern, responsive portfolio website built with React, Three.js, and GSAP animations. This portfolio showcases my projects, skills, and experience in an interactive and engaging way.
+A responsive React and Vite portfolio focused on software development, automation, stakeholder collaboration and technical problem-solving.
 
-## 🚀 Features
+## Pages
 
-- Interactive 3D elements using Three.js
-- Smooth animations with GSAP
-- Responsive design for all devices
-- Contact form with EmailJS integration
-- Interactive globe visualization
-- Modern UI with NextUI components
-- Dark/Light mode support
+- `/` — current portfolio (v3): experience, skills, earlier academic projects and contact form.
+- `/work/voc-analysis`, `/work/vivant`, `/work/booking-system` — dated university and school case studies.
+- `/legal` — privacy and terms.
+- `/legacy` — the original portfolio, with its legal page at `/legacy/legal`.
+- Previous `/v3` page URLs redirect to the corresponding current page, preserving queries and anchors. V2 has been removed.
 
-## 🛠️ Technologies Used
+The current site keeps the typed brand and browser title, a real 3D globe with a cloud layer that rotates more slowly in the globe’s direction, reduced-motion support, and the existing EmailJS contact integration. Source and assets remain under `src/v3` and `public/v3`.
 
-- React 18
-- Three.js
-- GSAP
-- Framer Motion
-- NextUI
-- TailwindCSS
-- Vite
-- EmailJS
-- React Router DOM
-- TypeScript
+## Development
 
-## 📦 Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/AlexCDowsett/portfolio.git
-cd portfolio
-```
-
-2. Install dependencies:
 ```bash
 npm install
-```
-
-3. Set up environment variables:
-```bash
-cp .env.example .env
-```
-
-4. Configure your environment variables in the `.env` file (see Environment Setup section below)
-
-5. Start the development server:
-```bash
 npm run dev
+npm run build
+npm run preview
 ```
 
-## 🔧 Environment Setup
+The existing `vercel.json` SPA rewrite supports direct navigation to case studies and legal pages.
 
-This project uses environment variables to keep sensitive information secure. Create a `.env` file in the root directory with the following variables:
+## Contact configuration
+
+Keep these existing settings in a local `.env` file or your deployment environment:
 
 ```env
-# EmailJS Configuration
-VITE_EMAILJS_SERVICE_ID=your_service_id_here
-VITE_EMAILJS_TEMPLATE_ID=your_template_id_here
-VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
-
-# Contact Information
-VITE_CONTACT_EMAIL=your_email@example.com
-VITE_CONTACT_NAME=Your Name
-
-# Personal Information
-VITE_PERSONAL_NAME=Your Name
-VITE_PORTFOLIO_TITLE=Your Portfolio
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+VITE_CONTACT_EMAIL=alex@dowsett.dev
+VITE_CONTACT_NAME=Alex
+VITE_PORTFOLIO_TITLE=Alex's Portfolio
 ```
 
-### Setting up EmailJS:
+Without delivery configuration, the form shows a direct email fallback. Failed sends preserve the message for retry. Validation, delivery states and duplicate-submit prevention have been tested with a mocked transport; no real test email was sent.
 
-1. Create an account at [EmailJS](https://www.emailjs.com/)
-2. Create an email service (Gmail, Outlook, etc.)
-3. Create an email template
-4. Get your public key from the EmailJS dashboard
-5. Add these credentials to your `.env` file
-
-**Note:** The `.env` file is already added to `.gitignore` to prevent sensitive information from being committed to version control.
-
-## 🔧 Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-
-## 🌐 Live Demo
-
-Visit the live site at: [dowsett.dev](https://dowsett.dev)
-
-## 📝 Project Structure
-
-```
-portfolio/
-├── src/
-│   ├── components/     # React components
-│   ├── constants/      # Project constants and data
-│   ├── assets/         # Static assets
-│   └── App.jsx         # Main application component
-├── public/            # Public assets
-└── index.html         # Entry HTML file
-```
-
-## 🤝 Contributing
-
-Feel free to fork this project and make your own changes. Pull requests are welcome!
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 👨‍💻 Author
-
-Alex Dowsett
-- GitHub: [@AlexCDowsett](https://github.com/AlexCDowsett)
-- LinkedIn: [Alex Dowsett](https://www.linkedin.com/in/alex-dowsett-27266b151/)
+See [design notes](src/v3/README.md) and [verification notes](src/v3/QA.md).

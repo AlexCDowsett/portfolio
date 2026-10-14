@@ -228,7 +228,7 @@ const About = forwardRef((props, ref) => {
                                 text={aboutContent.location.title} bgColor="#100c14"
                                 textColor="#ffffff" glitchInterval={15}/></p>
                             <p className="grid-subtext pb-2">{aboutContent.location.description}</p>
-                            <a href="#contact" className="block w-full justify-center">
+                            <a href="/legacy#contact" className="block w-full justify-center">
                                 <Button
                                     name="Contact Me" 
                                     isBeam 
@@ -286,7 +286,7 @@ const About = forwardRef((props, ref) => {
                                 role="button"
                                 tabIndex="0"
                             >
-                                <img src={hasCopied ? 'assets/tick.svg' : 'assets/copy.svg'} alt="copy"
+                                <img src={hasCopied ? '/assets/tick.svg' : '/assets/copy.svg'} alt="copy"
                                      className="w-6 h-6"/>
                                 <p className="lg:text-2xl md:text-xl font-medium text-gray_gradient text-white">{aboutContent.contact.email}</p>
                             </div>

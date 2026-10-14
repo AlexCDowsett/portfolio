@@ -76,15 +76,15 @@ const Hero = forwardRef((props, ref) => {
         const href = "#about";
         
         // If we're not on the main page, first navigate to the main page with the hash
-        if (window.location.pathname !== '/') {
-            window.location.href = `/${href}`;
+        if (window.location.pathname.replace(/\/$/, '') !== '/legacy') {
+            window.location.href = `/legacy${href}`;
             return;
         }
 
         // If we're already on the main page, handle hash navigation
         const element = document.querySelector(href);
         if (element) {
-            const navbarHeight = document.querySelector("header").offsetHeight;
+            const navbarHeight = document.querySelector("header").offsetHeight + (document.querySelector('.legacy-site-notice')?.offsetHeight || 0);
             const elementPosition = element.offsetTop - navbarHeight;
             
             // Update the URL hash without triggering a scroll
@@ -148,7 +148,7 @@ const Hero = forwardRef((props, ref) => {
                         animate={{ opacity: showButton ? 1 : 0, y: showButton ? 0 : 50 }}
                         transition={{ duration: 0.5, ease: "easeOut" }}
                     >
-                        <a href="#about" className="flex" onClick={handleNavigation}>
+                        <a href="/legacy#about" className="flex" onClick={handleNavigation}>
                             <Button 
                                 name="Let's work together" 
                                 isBeam 

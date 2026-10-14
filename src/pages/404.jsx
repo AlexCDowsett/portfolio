@@ -14,7 +14,7 @@ const NotFound = () => (
       Oops! The page you are looking for does not exist.<br />
       Maybe you mistyped the address, or the page has moved.
     </p>
-    <Link to="/" className="field-btn transition-transform duration-300 ease-in-out transform hover:scale-110">
+    <Link to="/legacy" className="field-btn transition-transform duration-300 ease-in-out transform hover:scale-110">
       Go Home
     </Link>
   </div>

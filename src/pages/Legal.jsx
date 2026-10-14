@@ -21,7 +21,7 @@ const Legal = () => {
     }, [location]);
 
     return (
-        <main className="max-w-8xl mx-auto">
+        <main className="legacy-portfolio max-w-8xl mx-auto">
             <Navbar />
             <div className="pt-24 px-8 max-w-4xl mx-auto">
                 <section className="mb-16" id="terms">
@@ -67,7 +67,7 @@ const Legal = () => {
                     <p className="text-gray-300">
                         © 2025 Alex Dowsett. All Rights Reserved.
                         <br /><br />
-                        All content on this website, including text, images, and code, is the intellectual property of Alex Dowsett. 
+                        All content on this website, including text, images, and code, is the intellectual property of Alex Dowsett.
                         Unauthorized use, reproduction, or distribution of this content is prohibited.
                     </p>
                 </section>
@@ -78,4 +78,4 @@ const Legal = () => {
     );
 };
 
-export default Legal; 
+export default Legal;

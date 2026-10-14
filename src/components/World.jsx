@@ -170,7 +170,7 @@ const World = () => {
 
         const globe = globeEl.current;
 
-        const CLOUDS_IMG_URL = 'assets/clouds.png';
+        const CLOUDS_IMG_URL = '/assets/clouds.png';
         const CLOUDS_ALT = 0.004;
         const CLOUDS_ROTATION_SPEED = -0.006;
 

@@ -29,11 +29,11 @@ const Footer = () => {
         </div>
         <div className="c-space sm:pt-7 lg:pb-1 lg:border-t md:border-t sm:border-t border-black-300 justify-between items-center wrap gap-3 xl:gap-5 flex">
             <div className="text-white-500 text-s text-s sm:text-md md:text-lg lg:flex xl:pl-10">
-                <a href="/legal#terms" className="hover:text-white transition-colors">
+                <a href="/legacy/legal#terms" className="hover:text-white transition-colors">
                     <p>Terms & Conditions</p>
                 </a>
                 <p className="hidden sm:hidden lg:block md:hidden">&nbsp;&nbsp;|&nbsp;&nbsp;</p>
-                <a href="/legal#privacy" className="hover:text-white transition-colors">
+                <a href="/legacy/legal#privacy" className="hover:text-white transition-colors">
                     <p>Privacy Policy</p>
                 </a>
             </div>
@@ -64,7 +64,7 @@ const Footer = () => {
             </div>
 
             <div className="text-white-500 text-right lg:flex text-s sm:text-md md:text-lg xl:pr-10">
-                <a href="/legal#copyright" className="hover:text-white transition-colors">
+                <a href="/legacy/legal#copyright" className="hover:text-white transition-colors">
                     <p className="hidden md:block">© 2025 Alex Dowsett.&nbsp;All rights reserved.</p>
                     <div className="block md:hidden">
                         <p>© 2025 Alex Dowsett.</p>
