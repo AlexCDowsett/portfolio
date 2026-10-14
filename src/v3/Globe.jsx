@@ -16,11 +16,18 @@ class GlobeBoundary extends Component {
 function Earth({ moving, onReady }) {
     const surface = useRef();
     const clouds = useRef();
+    const renderedFrames = useRef(0);
     const [texture, cloudTexture] = useLoader(TextureLoader, ['/v3/earth.jpg', '/v3/clouds.webp']);
     texture.colorSpace = SRGBColorSpace;
     cloudTexture.colorSpace = SRGBColorSpace;
-    useEffect(() => { onReady(); }, [onReady]);
-    useFrame((_, delta) => {
+    useFrame((state, delta) => {
+        // Texture loading alone is too early: let the complete lit scene render
+        // twice before revealing it, including when reduced motion uses demand mode.
+        if (renderedFrames.current < 3) {
+            renderedFrames.current += 1;
+            if (renderedFrames.current === 3) onReady();
+            else state.invalidate();
+        }
         if (!moving) return;
         const step = Math.min(delta, 0.05);
         if (surface.current) surface.current.rotation.y += step * EARTH_ROTATION_SPEED;
@@ -83,8 +90,8 @@ export default function Globe() {
     const moving = visible && !reduced;
     return (
         <div className="v3-globe" ref={container} data-moving={moving}>
-            <div className={`v3-globe-fallback ${ready && !failed ? 'is-hidden' : ''}`} aria-hidden="true"><span className="v3-fallback-surface" /><span className="v3-fallback-clouds" /></div>
-            <div className="v3-globe-render" aria-hidden="true">
+            <div className={`v3-globe-fallback ${supported && !failed ? 'is-hidden' : ''}`} aria-hidden="true"><span className="v3-fallback-surface" /><span className="v3-fallback-clouds" /></div>
+            <div className={`v3-globe-render ${ready && !failed && visible ? 'is-ready' : ''}`} aria-hidden="true">
                 {supported && visible && !failed && <GlobeBoundary onFailure={markFailed}><Suspense fallback={null}>
                     <Canvas camera={{ position: [0, 0, 6.3], fov: 45 }} dpr={[1, 1.5]} frameloop={moving ? 'always' : 'demand'} gl={{ alpha: true, antialias: true, powerPreference: 'low-power' }}>
                         <CanvasHealth onFailure={markFailed} />

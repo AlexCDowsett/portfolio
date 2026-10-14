@@ -19,3 +19,4 @@
 Production publishing uses the existing GitHub-to-Vercel integration after verification. The build retains size warnings from Three.js and the original legacy scenes; current and legacy page code are split into separate chunks. A backup of the removed v2 source and assets was retained at `/private/tmp/alex-portfolio-v2-backup.tar.gz` before removal, including in-progress files.
 
 - The 404 uses Cataas’s random cute-cat endpoint and retains the return-to-work link if the image service fails.
+- Globe entrance: browser reload confirmed the WebGL layer starts at zero opacity and 32px to the right, with the flat fallback hidden. After two complete scene frames it fades to its original opacity and position, keeping clouds and lighting together. Desktop and 390px mobile checks passed; the globe continues rotating and there is no horizontal overflow. Reduced motion uses demand-frame invalidation for readiness and disables CSS transitions. Production build passed.
