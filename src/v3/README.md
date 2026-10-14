@@ -15,6 +15,7 @@ The v3 redesign is the default site at `/`. The original portfolio is at `/legac
 ## Sources
 
 - Supplied `ALEX DOWSETT.pdf` (two pages), copied unchanged to the v3 CV download.
+- User-confirmed webchat/email development responsibilities and customer adoption at Content Guru.
 - Existing portfolio source and live dowsett.dev, reviewed 14 October 2026.
 - Existing `public/CV.pdf`, which dates the first portfolio website to 2025.
 - Public repository READMEs for voc-analyser, vivant and essenuals-booking-system.
