@@ -1,6 +1,6 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { SpotLight, useGLTF, useTexture } from '@react-three/drei';
-import { useThree } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { ClampToEdgeWrapping, RepeatWrapping, SRGBColorSpace } from 'three';
 import { myProjects } from '../constants/index.js';
 import { useScreenTexture } from '../v3/useScreenTexture.js';
@@ -22,6 +22,7 @@ function screenGeometry(source) {
 // Copy of the original screen geometry and lighting. Keep the overview fixed;
 // each video hook is explicit, and playback stops when the preview unmounts.
 export default function OriginalScreens({ playing, onReady }) {
+    const renderedFrames = useRef(0);
     const { nodes, materials } = useGLTF('/models/old_computers.glb');
     const { invalidate } = useThree();
     const voc = useScreenTexture(myProjects[1].texture, '/v3/screens/voc-analyser.jpg', playing);
@@ -56,9 +57,15 @@ export default function OriginalScreens({ playing, onReady }) {
         txtStatic.offset.set(-0.15, -1.4);
         txtStatic.repeat.set(3.9, 3.5);
         txtStatic.needsUpdate = true;
-        onReady();
         invalidate();
-    }, [projectTextures, txtBlue, txtStatic, onReady, invalidate]);
+    }, [projectTextures, txtBlue, txtStatic, invalidate]);
+    useFrame(state => {
+        // Keep the poster until the populated, lit scene has actually rendered.
+        if (renderedFrames.current >= 3) return;
+        renderedFrames.current += 1;
+        if (renderedFrames.current === 3) onReady();
+        else state.invalidate();
+    });
     return (
         <group dispose={null}>
 

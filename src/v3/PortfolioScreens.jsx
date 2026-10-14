@@ -51,7 +51,7 @@ export default function PortfolioScreens() {
     const markReady = useMemo(() => () => setReady(true), []);
     const markFailed = useMemo(() => () => { setFailed(true); setReady(false); }, []);
     return <div className="v3-screens-preview" ref={container}>
-        <div className="v3-screens-fallback" aria-hidden={ready}><img src="/v3/portfolio-screens.png" alt="" width="536" height="272" /></div>
+        <div className="v3-screens-fallback" aria-hidden={ready}><img src="/v3/portfolio-screens-poster.png" alt="" width="592" height="309" /></div>
         {supported && visible && !failed && <div className={`v3-screens-render ${ready ? 'is-ready' : ''}`} role="img" aria-label="The original portfolio’s 3D screens, lighting and project demos">
             <PreviewBoundary onFailure={markFailed}><Canvas camera={{ position: [0, 0, 5], fov: 75 }} dpr={[1, 1.5]} frameloop={reduced ? 'demand' : 'always'} gl={{ alpha: true, antialias: true, powerPreference: 'low-power' }}>
                 <CanvasHealth onFailure={markFailed} />
