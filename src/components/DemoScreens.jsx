@@ -1,9 +1,10 @@
-import React, {useRef, useEffect} from 'react'
-import {SpotLight, useAnimations, useGLTF, useTexture, useVideoTexture} from '@react-three/drei'
+import React, {useRef, useEffect, useMemo} from 'react'
+import {SpotLight, useAnimations, useGLTF, useTexture} from '@react-three/drei'
 import {RepeatWrapping} from "three";
 import gsap from 'gsap';
 import {useGSAP} from "@gsap/react";
 import {ScreenLocations, myProjects} from "../constants/index.js";
+import { useScreenTexture } from '../v3/useScreenTexture.js';
 
 const DemoScreens = (props) => {
 
@@ -11,26 +12,15 @@ const DemoScreens = (props) => {
     const {nodes, materials, animations} = useGLTF('/models/old_computers.glb')
     const {actions} = useAnimations(animations, group);
 
-    // Load textures from myProjects (excluding the first project)
-    const projectTextures = myProjects.slice(1).map(project => {
-        try {
-            const texture = useVideoTexture(project.texture, {
-                muted: true,
-                playsInline: true,
-                crossOrigin: 'anonymous',
-                loop: true,
-                start: true,
-                onError: (error) => {
-                    // console.error(`Video texture error for ${project.title}:`, error);
-                }
-            });
-
-            // Move mutations to useEffect below
-            return texture;
-        } catch (error) {
-            return null;
-        }
-    });
+    // Explicit hooks preserve React's hook order. Catching a texture's Suspense
+    // promise inside a loop previously let the scene continue with missing hooks.
+    const voc = useScreenTexture(myProjects[1].texture, '/v3/screens/voc-analyser.jpg', true);
+    const vivant = useScreenTexture(myProjects[2].texture, '/v3/screens/vivant.jpg', true);
+    const uart = useScreenTexture(myProjects[3].texture, '/v3/screens/VHDL.jpg', true);
+    const radio = useScreenTexture(myProjects[4].texture, '/v3/screens/cradio.jpg', true);
+    const booking = useScreenTexture(myProjects[5].texture, '/v3/screens/Essensuals.jpg', true);
+    const organiser = useScreenTexture(myProjects[6].texture, '/v3/screens/voc-organiser.jpg', true);
+    const projectTextures = useMemo(() => [voc, vivant, uart, radio, booking, organiser], [voc, vivant, uart, radio, booking, organiser]);
 
     // Mutate projectTextures after they are loaded
     useEffect(() => {
@@ -48,7 +38,7 @@ const DemoScreens = (props) => {
         });
     }, [projectTextures]);
 
-    const txtStatic = useVideoTexture('/textures/static.mp4', {playsInline: true,});
+    const txtStatic = useScreenTexture('/textures/static.mp4', '/v3/screens/static.jpg', true);
 
     const txtBlue = useTexture('/textures/bluescreen2.png')
     txtBlue.wrapS = txtBlue.wrapT = RepeatWrapping;
