@@ -442,4 +442,10 @@
     .portfolio-v3 .v3-not-found { grid-template-columns: 1fr; gap: 35px; padding-block: 60px 75px; }
     .portfolio-v3 .v3-404-cat { justify-self: start; width: min(100%, 300px); }
 }
+@media (max-width: 480px) {
+    .portfolio-v3 .v3-not-found { gap: 24px; padding-block: 32px 40px; min-height: 0; }
+    .portfolio-v3 .v3-not-found h1 { font-size: 36px; margin-top: 14px; }
+    .portfolio-v3 .v3-not-found-copy > p:not(.v3-kicker) { margin-block: 16px; font-size: 15px; line-height: 1.65; }
+    .portfolio-v3 .v3-404-cat { width: min(100%, 280px); width: min(100%, clamp(160px, calc(100svh - 390px), 280px)); }
+}
 @media (max-width: 800px) { .portfolio-v3 .v3-projects { grid-template-columns: 1fr; } }
