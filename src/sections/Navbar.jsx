@@ -101,6 +101,7 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { isAboutVisible, isExperienceVisible, isProjectsVisible, isContactVisible } = useScroll();
     const isMobile = useMediaQuery({ maxWidth: 768 });
+    const isCompact = isMobile && !isOpen && isProjectsVisible && !isAboutVisible && !isExperienceVisible && !isContactVisible;
     const [opacity, setOpacity] = useState(0);
 
     useEffect(() => {
@@ -129,26 +130,26 @@ const Navbar = () => {
     }, [isMobile, isOpen, isProjectsVisible, isAboutVisible, isExperienceVisible, isContactVisible]);
 
     return (
-        <div className="legacy-navigation">
-        <LegacyBanner />
+        <div className={`legacy-navigation ${isCompact ? 'is-compact' : ''}`}>
+        <LegacyBanner hidden={isCompact} />
         <motion.header
             className="fixed top-0 left-0 right-0 z-50 bg-black/90"
             animate={{
-                height: isMobile && !isOpen && isProjectsVisible && !isAboutVisible && !isExperienceVisible && !isContactVisible ? "2rem" : "4rem", // Adjust height based on visibility
+                height: isCompact ? "2rem" : "4rem",
                 opacity
             }}
             transition={{
                 duration: 0.3,
                 ease: "easeInOut"
             }}
-            style={{ opacity, top: 'var(--legacy-notice-height)' }}
+            style={{ opacity }}
         >
             <ScrollProgress isSticky={true} isMobile={isMobile} />
             <div className="max-w-7xl mx-auto">
                 <motion.div
                     className="flex justify-between items-start mx-auto c-space"
                     animate={{
-                        padding: isMobile && !isOpen && isProjectsVisible && !isAboutVisible && !isExperienceVisible && !isContactVisible ? "0.1rem 0.5rem" : "1rem 1.5rem",
+                        padding: isCompact ? "0.1rem 0.5rem" : "1rem 1.5rem",
                     }}
                     transition={{
                         duration: 0.3,
@@ -159,7 +160,7 @@ const Navbar = () => {
                         href="/legacy#home"
                         className="text-neutral-400 font-bold text-xl hover:text-white transition-colors whitespace-nowrap inline-flex"
                         animate={{
-                            scale: isMobile && !isOpen && isProjectsVisible && !isAboutVisible && !isExperienceVisible && !isContactVisible ? 0.7 : 1
+                            scale: isCompact ? 0.7 : 1
                         }}
                         transition={{
                             duration: 0.3,
@@ -171,8 +172,8 @@ const Navbar = () => {
                     <motion.div
                         className="sm:hidden"
                         animate={{
-                            scale: isMobile && !isOpen && isProjectsVisible && !isAboutVisible && !isExperienceVisible && !isContactVisible ? 0.75 : 1, // Animate scale from 100 to 75 and back
-                            padding: isMobile && !isOpen && isProjectsVisible && !isAboutVisible && !isExperienceVisible && !isContactVisible ? "0.2rem 0.7rem" : "0.7rem 0rem",
+                            scale: isCompact ? 0.75 : 1,
+                            padding: isCompact ? "0.2rem 0.7rem" : "0.7rem 0rem",
                         }}
                         transition={{
                             duration: 0.3,
