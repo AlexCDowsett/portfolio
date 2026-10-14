@@ -12,14 +12,10 @@ import { motion } from "framer-motion";
 // Environment variables
 const PERSONAL_NAME = import.meta.env.VITE_PERSONAL_NAME || 'Alex';
 
-const handEmojis = ["👋", "✋", "🤚", "🖐️", "🖖"]; // Array of hand emojis
-
 const Hero = forwardRef((props, ref) => {
     const [isMobile, setIsMobile] = useState(false);
     const [showText, setShowText] = useState(false); // State to control text visibility
     const [showButton, setShowButton] = useState(false);
-    const [emoji, setEmoji] = useState(handEmojis[0]); // State for the emoji
-    const [isGlitching, setIsGlitching] = useState(true); // State to control glitching
 
     useEffect(() => {
         const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -46,30 +42,6 @@ const Hero = forwardRef((props, ref) => {
             clearTimeout(buttonTimer);
         };
     }, []);
-
-    useEffect(() => {
-        if (showText) {
-            let index = 0;
-
-            const emojiInterval = setInterval(() => {
-                if (isGlitching) {
-                    setEmoji(handEmojis[index]);
-                    index = (index + 1) % handEmojis.length; // Cycle through emojis
-                }
-            }, 100); // Change emoji every 200ms
-
-            // Stop glitching after a certain time or condition
-            const stopGlitchingTimer = setTimeout(() => {
-                setIsGlitching(false); // Stop glitching after a certain duration
-                setEmoji(handEmojis[0]); // Reset to the first emoji
-            }, 1800); // Adjust duration as needed
-
-            return () => {
-                clearInterval(emojiInterval);
-                clearTimeout(stopGlitchingTimer); // Clean up timer on unmount
-            };
-        }
-    }, [showText, isGlitching]);
 
     const handleNavigation = (e) => {
         e.preventDefault();
@@ -115,7 +87,6 @@ const Hero = forwardRef((props, ref) => {
                         <div className="flex justify-center"> {/* Align text to the right */}
                             <span className="sm:text-3xl text-xl font-medium text-white text-center font-generalsans">
                                 <GlitchEffect text={`Hi, I'm ${PERSONAL_NAME}`} textColor="#FFFFFF" bgColor="#000000" glitchInterval={100} />
-                                <span className={isGlitching ? "" : "waving-hand"}>{emoji}</span>
                             </span>
                         </div>
                         <span className="hero_tag text-gray-gradient text-center block"> {/* Center the tag */}

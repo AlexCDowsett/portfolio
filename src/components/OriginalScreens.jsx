@@ -1,7 +1,9 @@
 import { useEffect, useMemo } from 'react';
-import { SpotLight, useGLTF, useTexture, useVideoTexture } from '@react-three/drei';
+import { SpotLight, useGLTF, useTexture } from '@react-three/drei';
+import { useThree } from '@react-three/fiber';
 import { ClampToEdgeWrapping, RepeatWrapping, SRGBColorSpace } from 'three';
 import { myProjects } from '../constants/index.js';
+import { useScreenTexture } from '../v3/useScreenTexture.js';
 
 function screenGeometry(source) {
     const geometry = source.clone();
@@ -21,15 +23,15 @@ function screenGeometry(source) {
 // each video hook is explicit, and playback stops when the preview unmounts.
 export default function OriginalScreens({ playing, onReady }) {
     const { nodes, materials } = useGLTF('/models/old_computers.glb');
-    const options = { start: false, muted: true, playsInline: true, loop: true };
-    const voc = useVideoTexture(myProjects[1].texture, options);
-    const vivant = useVideoTexture(myProjects[2].texture, options);
-    const uart = useVideoTexture(myProjects[3].texture, options);
-    const radio = useVideoTexture(myProjects[4].texture, options);
-    const booking = useVideoTexture(myProjects[5].texture, options);
-    const organiser = useVideoTexture(myProjects[6].texture, options);
+    const { invalidate } = useThree();
+    const voc = useScreenTexture(myProjects[1].texture, '/v3/screens/voc-analyser.jpg', playing);
+    const vivant = useScreenTexture(myProjects[2].texture, '/v3/screens/vivant.jpg', playing);
+    const uart = useScreenTexture(myProjects[3].texture, '/v3/screens/VHDL.jpg', playing);
+    const radio = useScreenTexture(myProjects[4].texture, '/v3/screens/cradio.jpg', playing);
+    const booking = useScreenTexture(myProjects[5].texture, '/v3/screens/Essensuals.jpg', playing);
+    const organiser = useScreenTexture(myProjects[6].texture, '/v3/screens/voc-organiser.jpg', playing);
     const projectTextures = useMemo(() => [voc, vivant, uart, radio, booking, organiser], [voc, vivant, uart, radio, booking, organiser]);
-    const txtStatic = useVideoTexture('/textures/static.mp4', options);
+    const txtStatic = useScreenTexture('/textures/static.mp4', '/v3/screens/static.jpg', playing);
     const blueImage = useTexture('/textures/bluescreen2.png');
     const txtBlue = useMemo(() => blueImage.clone(), [blueImage]);
     const blueScreen = useMemo(() => screenGeometry(nodes.Object_213.geometry), [nodes]);
@@ -43,6 +45,7 @@ export default function OriginalScreens({ playing, onReady }) {
             texture.wrapS = texture.wrapT = RepeatWrapping;
             texture.offset.set(project.textureOffset?.x ?? 0, project.textureOffset?.y ?? 0);
             texture.repeat.set(project.textureRepeat?.x ?? 1, project.textureRepeat?.y ?? 1);
+            texture.needsUpdate = true;
         });
         txtBlue.wrapS = txtBlue.wrapT = ClampToEdgeWrapping;
         txtBlue.offset.set(0, 0);
@@ -52,13 +55,10 @@ export default function OriginalScreens({ playing, onReady }) {
         txtStatic.wrapS = txtStatic.wrapT = RepeatWrapping;
         txtStatic.offset.set(-0.15, -1.4);
         txtStatic.repeat.set(3.9, 3.5);
+        txtStatic.needsUpdate = true;
         onReady();
-    }, [projectTextures, txtBlue, txtStatic, onReady]);
-    useEffect(() => {
-        const videos = [...projectTextures, txtStatic].map(texture => texture.image);
-        videos.forEach(video => { if (playing) video.play().catch(() => {}); else video.pause(); });
-        return () => videos.forEach(video => video.pause());
-    }, [playing, projectTextures, txtStatic]);
+        invalidate();
+    }, [projectTextures, txtBlue, txtStatic, onReady, invalidate]);
     return (
         <group dispose={null}>
 

@@ -5,7 +5,7 @@ The v3 redesign is the default site at `/`. The original portfolio is at `/legac
 ## Plan and rationale
 
 1. Lead with transferable skills: Python, SQL, automation, customer requirements and technical delivery. Mention the current Project Engineer role as evidence, without positioning the site toward that job title. The previous introduction is out of date; omit unqualified claims about years of professional experience.
-2. Use an editorial visual direction: ink, warm paper, restrained brass accents, large typography and generous spacing. Keep the typed brand and browser title. Retain a real WebGL Earth with a cloud layer that drifts backwards relative to the rotating surface as a quieter background element with pause, reduced-motion and unavailable-WebGL fallbacks.
+2. Use an editorial visual direction: ink, warm paper, restrained brass accents, large typography and generous spacing. Keep the typed brand and browser title. Retain a real WebGL Earth with a cloud layer that drifts backwards relative to the rotating surface as a quieter background element with reduced-motion and unavailable-WebGL fallbacks.
 3. Make professional delivery visible before personal projects. Ground Content Guru and Prolific descriptions in the supplied CV, with no invented business metrics or customer names.
 4. Keep current experience and transferable skills ahead of the earlier-projects section. Label VOC research and Vivant as university projects and the booking application as school coursework. Group the VOC File Organiser with the analytics project and show confirmed dates for every project. Use two equal columns on desktop, with the first personal portfolio between Vivant and the booking system. Its 3D preview copies the original screen geometry, media and lighting, with fixed framing and no zoom controls; its links go directly to `/legacy`. Other projects retain dedicated case studies. Source their images from existing demo videos.
 5. Make the next step immediate: CV in the navigation and hero, recruitment-focused contact copy and the existing EmailJS contact integration, including success/error states and a direct email fallback.
@@ -24,6 +24,10 @@ The v3 redesign is the default site at `/`. The original portfolio is at `/legac
 
 ## Development
 
+The screen preview loads image frames from the original demos before attempting muted inline video playback. It switches to a video texture only after a decoded frame is available; blocked autoplay and video errors retain the images. A captured scene image also covers loading or unavailable WebGL. The globe and preview release their canvases offscreen; an animated Earth/cloud fallback covers WebGL failure. System Reduce Motion stops the decorative globe. There is no globe control. Interface icons use SVG rather than emoji-capable text glyphs.
+
 `npm run dev` → `/`. `npm run build` creates the production output. The existing Vercel SPA rewrite supports current case-study, legal and legacy deep links.
 
 The contact form retains the existing `VITE_EMAILJS_*`, `VITE_CONTACT_EMAIL` and `VITE_CONTACT_NAME` environment settings. Local QA must not send a real message. GitHub pushes to the existing `main` branch trigger the connected Vercel production deployment.
+
+The 404 page requests a fresh random cat from Cataas’s `cute` category, with a local SVG fallback if the service fails. Its primary action returns to the earlier-projects section.

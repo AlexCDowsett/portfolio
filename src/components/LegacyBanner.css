@@ -26,8 +26,11 @@
     text-decoration: underline;
     text-underline-offset: 4px;
     padding-block: 3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
-.legacy-site-notice a span { margin-left: 8px; }
+.legacy-site-notice .v3-icon { width: 13px; height: 13px; }
 .legacy-site-notice a:focus-visible { outline: 2px solid #152326; outline-offset: 4px; }
 .legacy-notice-spacer { height: var(--legacy-notice-height); }
 .legacy-portfolio section[id] { scroll-margin-top: calc(var(--legacy-notice-height) + 64px); }

@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import emailJS from '@emailjs/browser';
 import { Link } from 'react-router-dom';
 import { identity } from './data.js';
+import { Icon } from './Icon.jsx';
 
 const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -35,11 +36,11 @@ export function Contact() {
             <div className="v3-shell v3-contact-layout">
                 <div>
                     <p className="v3-kicker"><span className="v3-dot" /> LET’S CONNECT</p>
-                    <h2 id="v3-contact-title">Good work starts<br />with a <em>conversation.</em></h2>
+                    <h2 id="v3-contact-title">Good work starts <br />with a <em>conversation.</em></h2>
                     <p className="v3-contact-intro">Looking for an engineer who can understand the problem, build the solution and bring people along? I’d love to hear about your team.</p>
-                    <a className="v3-contact-email" href={`mailto:${identity.email}`}>{identity.email} <span aria-hidden="true">↗</span></a>
+                    <a className="v3-contact-email" href={`mailto:${identity.email}`}>{identity.email} <Icon /></a>
                     <p className="v3-contact-note">London area, UK · Open to remote opportunities</p>
-                    <div className="v3-contact-socials"><a href={identity.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a><a href={identity.github} target="_blank" rel="noreferrer">GitHub ↗</a><a href={identity.cv} target="_blank" rel="noreferrer">View CV ↗</a></div>
+                    <div className="v3-contact-socials"><a href={identity.linkedin} target="_blank" rel="noreferrer">LinkedIn <Icon /></a><a href={identity.github} target="_blank" rel="noreferrer">GitHub <Icon /></a><a href={identity.cv} target="_blank" rel="noreferrer">View CV <Icon /></a></div>
                 </div>
                 <form className="v3-form" onSubmit={submit} aria-label="Contact Alex" aria-busy={state === 'sending'}>
                     <div className="v3-form-pair">
@@ -48,7 +49,7 @@ export function Contact() {
                     </div>
                     <label>Your message<textarea name="message" rows={5} required maxLength={5000} value={form.message} onChange={update} placeholder="Tell me about the role, your team, or what you’re working on…" /></label>
                     <div className="v3-honeypot" aria-hidden="true"><label>Website<input name="website" tabIndex={-1} autoComplete="off" value={form.website} onChange={update} /></label></div>
-                    <div className="v3-form-bottom"><p>Your details are only used to reply.<br /><Link to="/legal#privacy">Privacy policy</Link></p><button className="v3-button v3-button-gold" type="submit" disabled={!configured || state === 'sending'}>{state === 'sending' ? 'Sending…' : 'Send message'}<span aria-hidden="true">↗</span></button></div>
+                    <div className="v3-form-bottom"><p>Your details are only used to reply. <br /><Link to="/legal#privacy">Privacy policy</Link></p><button className="v3-button v3-button-gold" type="submit" disabled={!configured || state === 'sending'}>{state === 'sending' ? 'Sending…' : 'Send message'}<Icon /></button></div>
                     <div className="v3-form-status" role="status" aria-live="polite">
                         {state === 'success' && 'Thanks for getting in touch. Your message has been sent.'}
                         {state === 'error' && <>Your message couldn’t be sent. Please try again or <a href={`mailto:${identity.email}`}>email me directly</a>. Your message is still here.</>}

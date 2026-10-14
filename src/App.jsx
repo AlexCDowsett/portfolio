@@ -12,7 +12,6 @@ const Projects = lazy(() => import('./sections/Projects.jsx'));
 const Contact = lazy(() => import('./sections/Contact.jsx'));
 const Footer = lazy(() => import('./sections/Footer.jsx'));
 const Legal = lazy(() => import('./pages/Legal.jsx'));
-const NotFound = lazy(() => import('./pages/404.jsx'));
 const PortfolioV3 = lazy(() => import('./v3/PortfolioV3.jsx'));
 
 function V3Redirect() {
@@ -44,7 +43,6 @@ const App = () => {
                         </main>
                     } />
                     <Route path="/legacy/legal" element={<Legal />} />
-                    <Route path="/legacy/*" element={<NotFound />} />
                     <Route path="/*" element={<PortfolioV3 />} />
                 </Routes>
                 </Suspense>
